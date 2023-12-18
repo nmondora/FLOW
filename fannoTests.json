@@ -1,0 +1,20 @@
+{
+    "cases": [
+        {
+            "caseNo": 1,
+            "fluid": "air",
+            "frictionCoeff": 0.005,
+            "upstreamPress": 13611.84,
+            "upstreamTemp": 103.5714,
+            "upstreamMach": 3,
+            "upstreamVelocity": null,
+            "standardVolFlow": null,
+            "massFlow": null,
+            "tubeDiameter": 0.1,
+            "tubeLength": 1.0,
+            "downstreamPress": 16100,
+            "downstreamTemp": 118,
+            "downstreamMach": 2.70
+        }
+    ]
+}
