@@ -15,6 +15,38 @@
             "downstreamPress": 16100,
             "downstreamTemp": 118,
             "downstreamMach": 2.70
+        },
+        {
+            "caseNo": 2,
+            "fluid": "air",
+            "frictionCoeff": 0.021,
+            "upstreamPress": 200000,
+            "upstreamTemp": 550,
+            "upstreamMach": 0.4,
+            "upstreamVelocity": null,
+            "standardVolFlow": null,
+            "massFlow": null,
+            "tubeDiameter": 0.12,
+            "tubeLength": 12.8,
+            "downstreamPress": 95075.3389,
+            "downstreamTemp": 502.5584,
+            "downstreamMach": 0.80434
+        },
+        {
+            "caseNo": 3,
+            "fluid": "air",
+            "frictionCoeff": 0.023,
+            "upstreamPress": 300000,
+            "upstreamTemp": 500,
+            "upstreamMach": null,
+            "upstreamVelocity": 70,
+            "standardVolFlow": null,
+            "massFlow": null,
+            "tubeDiameter": 0.04,
+            "tubeLength": 15,
+            "downstreamPress": 249806.2849,
+            "downstreamTemp": 498.9114,
+            "downstreamMach": 0.18735
         }
     ]
 }

@@ -54,19 +54,18 @@ for case in cases_list:
     downstreamTempExpected = Q_(downstreamTempExpected, u.kelvin) if downstreamTempExpected is not None else None
 
     # run fannoFlow() and assign outputs
-    downstreamMach, downstreamPress, downstreamTemp = fannoFlow.fannoFlow(fluid=fluid, upstreamPress=upstreamPress, 
+    downstreamMach, downstreamPress, downstreamTemp = fannoFlow.fannoFlow(u, fluid=fluid, upstreamPress=upstreamPress, 
                                                                          tubeDiam=tubeDiameter, tubeLen=tubeLength,
                                                                          frictionCoeff=frictionCoeff, upstreamTemp=upstreamTemp,
                                                                          standardVolFlow=standardVolFlow, massFlow=massFlow,
-                                                                         upstreamMach=upstreamMach)
+                                                                         upstreamMach=upstreamMach, upstreamVel=upstreamVelocity)
 
     # check if outputs match expected values
-    print
     print(TextColors.MAGENTA + f'Test Case: {caseNo}' + TextColors.END)
     downstreamMachSpread, textColor = spread(downstreamMach, downstreamMachExpected, tol)
-    print(f'{textColor}\tDownstream Mach:  {downstreamMachSpread:.2}%\033[0m')
+    print(f'{textColor}\tDownstream Mach:  {downstreamMachSpread:.2f}% ({downstreamMach:0.3f} vs. {downstreamMachExpected:0.3f})\033[0m')
     downstreamTempSpread, textColor = spread(downstreamTemp.magnitude, downstreamTempExpected.magnitude, tol)
-    print(f'{textColor}\tDownstream Temp:  {downstreamTempSpread:.2}%\033[0m')
+    print(f'{textColor}\tDownstream Temp:  {downstreamTempSpread:.2f}% ({downstreamTemp:0.3f} vs. {downstreamTempExpected:0.3f})\033[0m')
     downstreamPressSpread, textColor = spread(downstreamPress.magnitude, downstreamPressExpected.magnitude, tol)
-    print(f'{textColor}\tDownstream Press: {downstreamPressSpread:.2}%\033[0m')
+    print(f'{textColor}\tDownstream Press: {downstreamPressSpread:.2f}% ({downstreamPress:0.3f} vs. {downstreamPressExpected:0.3f})\033[0m')
 

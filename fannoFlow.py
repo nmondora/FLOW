@@ -1,4 +1,4 @@
-def fannoFlow(fluid, upstreamPress, tubeDiam, tubeLen, frictionCoeff=0.58, upstreamTemp=None, standardVolFlow=None, massFlow=None, upstreamMach=None):
+def fannoFlow(u, fluid, upstreamPress, tubeDiam, tubeLen, frictionCoeff=0.58, upstreamTemp=None, standardVolFlow=None, massFlow=None, upstreamMach=None, upstreamVel=None):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
     # Fanno Flow  -  Flow in relatively short line with constant area, adiabatic frictional
     #   Inputs:
@@ -21,7 +21,7 @@ def fannoFlow(fluid, upstreamPress, tubeDiam, tubeLen, frictionCoeff=0.58, upstr
 
     from CoolProp import CoolProp as cp
     from pint import UnitRegistry
-    u = UnitRegistry()
+    #u = UnitRegistry()
     Q_ = u.Quantity
     import math
     import standardFlow_TO_massFlow
@@ -29,8 +29,8 @@ def fannoFlow(fluid, upstreamPress, tubeDiam, tubeLen, frictionCoeff=0.58, upstr
     import numpy as np
 
     # make sure we have everything we need
-    if standardVolFlow is None and massFlow is None and upstreamMach is None:
-        raise("Not enought info! Provide a flow rate OR upstream mach number.")
+    if standardVolFlow is None and massFlow is None and upstreamMach is None and upstreamVel is None:
+        raise("Not enought info! Provide a flow rate OR upstream mach number OR velocity.")
 
     # Constants
     R = 8.314 # Ideal Gas Constant
@@ -39,39 +39,37 @@ def fannoFlow(fluid, upstreamPress, tubeDiam, tubeLen, frictionCoeff=0.58, upstr
     upstreamTemp = upstreamTemp if upstreamTemp is not None else Q_(293.15, u.kelvin)
 
     # Assert pressure in Pascal
-    print(f'cummmm {upstreamPress}')
     upstreamPress = upstreamPress.to('pascal')
 
     # XC area
     area = math.pi * (tubeDiam/2)**2
 
     # find specific heats of fluid at upstream conditions
-    print(f'sexxx {upstreamTemp}')
     Cp = cp.PropsSI('C', 'T', upstreamTemp.magnitude, 'P', upstreamPress.magnitude, fluid)
     Cv = cp.PropsSI('O', 'T', upstreamTemp.magnitude, 'P', upstreamPress.magnitude, fluid)
     gamma = Cp / Cv
+    #gamma = 1.4
+    print(f'gamma: {gamma}')
 
     # if M1 is not known, find it
     if upstreamMach is None:
         # Convert to mass flow rate, if needed
         massFlow = standardFlow_TO_massFlow(standardVolFlow) if standardVolFlow else massFlow
 
-        # find velocity   (continuity)
-        upstreamDensity = cp.PropsSI('D', 'T', upstreamTemp.magnitude, 'P', upstreamPress.magnitude, fluid) * u.kilogram / (u.meter)**3
-        upstreamVel = (massFlow.to('kilogram / sec')).magnitude / ((area.to('meter^2')).magnitude * (upstreamDensity.to('kilogram / meter^3')).magnitude) * u.meter / u.sec
-
-        # find G = density * velocity => constant   (eqn. 13.24a)
-        #G = massFlow.to('kilogram / sec') / area
+        if upstreamVel is None:
+            # find velocity   (continuity)
+            upstreamDensity = cp.PropsSI('D', 'T', upstreamTemp.magnitude, 'P', upstreamPress.magnitude, fluid) * u.kilogram / (u.meter)**3
+            upstreamVel = (massFlow.to('kilogram / sec')).magnitude / ((area.to('meter^2')).magnitude * (upstreamDensity.to('kilogram / meter^3')).magnitude) * u.meter / u.sec
+        else:
+            upstreamVel = upstreamVel.to('meter / sec')
 
         # find upstream mach
         molemass = cp.PropsSI(fluid, 'molemass') * u.kilogram / u.kmol
-        upstreamC = math.sqrt((gamma * R * upstreamTemp.to('kelvin') / molemass).magnitude) * u.meter / u.sec
+        upstreamC = math.sqrt((gamma * R * upstreamTemp.magnitude / molemass.magnitude)) * u.meter / u.sec
         upstreamMach = upstreamVel / upstreamC
 
     # calculate friction force
-    Dh = 4*area / (math.pi * tubeDiam)
-    frictionCoeff = .005
-    F = frictionCoeff / Dh.to('meter') * tubeLen.to('meter')
+    F = frictionCoeff / tubeDiam.to('meter') * tubeLen.to('meter')
 
     # integrated expression for M, see pg.4 of fannoflow_GT.pdf or slide 9 of ReyleighFanno_Anys.pdf
     def func(M, gamma):
@@ -84,19 +82,16 @@ def fannoFlow(fluid, upstreamPress, tubeDiam, tubeLen, frictionCoeff=0.58, upstr
     if upstreamMach >= 1:
         boundVec = (1, 10)
     else:
-        boundVec = (0, 1)
+        boundVec = (0.01, 1)
 
     # find root of fannoFunction() and determine value of M2, the downstream mach number
     sol = root_scalar(fannoFunction, bracket=boundVec, args=(upstreamMach,gamma,F))
     downstreamMach = sol.root
-    print(f'M2: {downstreamMach}')
 
     # calculate downstream static temp, see pg. 6/7 of fannoflow_GT.pdf
     downstreamTemp = upstreamTemp.to('kelvin') * (1+(gamma-1)*.5*upstreamMach**2) / (1+(gamma-1)*.5*downstreamMach**2)
-    print(f'T2: {downstreamTemp}')
 
     # calculate downstream static pressure, see pg. 6/8 of fannoflow_GT.pdf
     downstreamPress = upstreamPress.to('pascal')*(upstreamMach/downstreamMach)*math.sqrt(downstreamTemp/upstreamTemp)
-    print(f'P2: {downstreamPress}')
 
     return downstreamMach, downstreamPress, downstreamTemp
