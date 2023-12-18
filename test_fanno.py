@@ -73,9 +73,9 @@ class FannoFlowTests(unittest.TestCase):
                                                                     standardVolFlow=standardVolFlow[i], massFlow=massFlow[i],
                                                                     upstreamMach=upstreamMach[i], upstreamVel=upstreamVelocity[i], gamma=constantGamma[i])
         
-        downstreamMachSpread = spread(downstreamMach[i], downstreamMachExpected[i])
-        downstreamTempSpread = spread(downstreamTemp[i].magnitude, downstreamTempExpected[i].magnitude)
-        downstreamPressSpread = spread(downstreamPress[i].magnitude, downstreamPressExpected[i].magnitude)
+        downstreamMachSpread = spread(downstreamMach, downstreamMachExpected[i])
+        downstreamTempSpread = spread(downstreamTemp.magnitude, downstreamTempExpected[i].magnitude)
+        downstreamPressSpread = spread(downstreamPress.magnitude, downstreamPressExpected[i].magnitude)
         self.assertTrue(downstreamMachSpread <= tol, f'Mach spread failed in test_{testno}')
         self.assertTrue(downstreamTempSpread <= tol, f'Temp spread failed in test_{testno}')
         self.assertTrue(downstreamPressSpread <= tol, f'Press spread failed in test_{testno}')
@@ -89,9 +89,9 @@ class FannoFlowTests(unittest.TestCase):
                                                                     standardVolFlow=standardVolFlow[i], massFlow=massFlow[i],
                                                                     upstreamMach=upstreamMach[i], upstreamVel=upstreamVelocity[i], gamma=constantGamma[i])
         
-        downstreamMachSpread = spread(downstreamMach[i], downstreamMachExpected[i])
-        downstreamTempSpread = spread(downstreamTemp[i].magnitude, downstreamTempExpected[i].magnitude)
-        downstreamPressSpread = spread(downstreamPress[i].magnitude, downstreamPressExpected[i].magnitude)
+        downstreamMachSpread = spread(downstreamMach, downstreamMachExpected[i])
+        downstreamTempSpread = spread(downstreamTemp.magnitude, downstreamTempExpected[i].magnitude)
+        downstreamPressSpread = spread(downstreamPress.magnitude, downstreamPressExpected[i].magnitude)
         self.assertTrue(downstreamMachSpread <= tol, f'Mach spread failed in test_{testno}')
         self.assertTrue(downstreamTempSpread <= tol, f'Temp spread failed in test_{testno}')
         self.assertTrue(downstreamPressSpread <= tol, f'Press spread failed in test_{testno}')
@@ -105,9 +105,9 @@ class FannoFlowTests(unittest.TestCase):
                                                                     standardVolFlow=standardVolFlow[i], massFlow=massFlow[i],
                                                                     upstreamMach=upstreamMach[i], upstreamVel=upstreamVelocity[i], gamma=constantGamma[i])
         
-        downstreamMachSpread = spread(downstreamMach[i], downstreamMachExpected[i])
-        downstreamTempSpread = spread(downstreamTemp[i].magnitude, downstreamTempExpected[i].magnitude)
-        downstreamPressSpread = spread(downstreamPress[i].magnitude, downstreamPressExpected[i].magnitude)
+        downstreamMachSpread = spread(downstreamMach, downstreamMachExpected[i])
+        downstreamTempSpread = spread(downstreamTemp.magnitude, downstreamTempExpected[i].magnitude)
+        downstreamPressSpread = spread(downstreamPress.magnitude, downstreamPressExpected[i].magnitude)
         self.assertTrue(downstreamMachSpread <= tol, f'Mach spread failed in test_{testno}')
         self.assertTrue(downstreamTempSpread <= tol, f'Temp spread failed in test_{testno}')
         self.assertTrue(downstreamPressSpread <= tol, f'Press spread failed in test_{testno}')
