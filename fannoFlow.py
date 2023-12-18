@@ -19,13 +19,18 @@ def fannoFlow(fluid, upstreamPress, massFlow, tubeDiam, tubeLen, frictionCoeff=0
     Q_ = u.Quantity
     import math
     from sympy.solvers import solve
-    from sympy import Symbol
+    from sympy import Symbol, integrate, lambdify
     import standardFlow_TO_massFlow
+    from scipy.optimize import fsolve, fminbound, minimize, minimize_scalar, root_scalar
+    from scipy.integrate import quad
+    import numpy as np
 
     # Constants
     R = 8.314 # Ideal Gas Constant
 
+    # Standard Temp if none specified
     upstreamTemp = upstreamTemp if upstreamTemp else Q_(68, u.degC)
+    # Convert to mass flow rate, if needed
     massFlow = standardFlow_TO_massFlow(standardVolFlow) if standardVolFlow else massFlow
 
     # XC area
@@ -45,16 +50,31 @@ def fannoFlow(fluid, upstreamPress, massFlow, tubeDiam, tubeLen, frictionCoeff=0
     gamma = Cp / Cv
     upstreamC = math.sqrt((gamma * R * upstreamTemp.to('kelvin') / molemass).magnitude) * u.meter / u.sec
     upstreamMach = upstreamVel / upstreamC
-    print(upstreamMach)
 
-    # find downstream mach
+    # calculate friction force
     Dh = 4*area / (math.pi * tubeDiam)
-    F = (frictionCoeff / Dh.to('meter')) * tubeLen.to('meter')
-    upstreamPoint = -1/(gamma*upstreamMach**2) - (gamma+1)/(2*gamma)*math.log(upstreamMach**2 / (1 + (gamma-1)/2 * upstreamMach**2))
-    downstreamPoint = F.magnitude + upstreamPoint.magnitude
-    x = Symbol('x')
-    downstreamPoint = solve(-1/(gamma * x**2) - (gamma+1)/(2*gamma)*math.log(x**2 / (1 + (gamma-1)/2 * x**2)) - (F.magnitude + upstreamPoint.magnitude), x)
+    frictionCoeff = .005
+    F = frictionCoeff / Dh.to('meter') * tubeLen.to('meter')
 
+    # HARD CODE REMOVE BEFORE MERGE
+    upstreamMach = 3
+    gamma = 1.4
 
+    # integrated expression for M, see pg.4 of fannoflow_GT.pdf or slide 9 of ReyleighFanno_Anys.pdf
+    def func(M, gamma):
+        return -1/(gamma * M**2) - (gamma+1)/(2*gamma)*np.log(M**2 / (1 + (gamma-1)/2 * M**2))
+    # expression for func(M2)-f(M1)-F=0, see pg.4 of fannoflow_GT.pdf or slide 9 of ReyleighFanno_Anys.pdf
+    def fannoFunction(M2, upstreamMach, gamma, F):
+        return -1/(gamma * M2**2) - (gamma+1)/(2*gamma)*np.log(M2**2 / (1 + (gamma-1)/2 * M2**2)) - func(upstreamMach,gamma) - F
 
-    return downstreamPoint
+    # set bounds for downstream mach number based on upstream mach number, see pg. 1 of fannoflow_GT.pdf
+    if upstreamMach >= 1:
+        boundVec = (1, 10)
+    else:
+        boundVec = (0, 1)
+
+    # find root of fannoFunction() and determine value of M2, the downstream mach number
+    sol = root_scalar(fannoFunction, bracket=boundVec, args=(upstreamMach,gamma,F))
+    downstreamMach = sol.root
+
+    return downstreamMach
