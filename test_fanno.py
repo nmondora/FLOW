@@ -19,22 +19,23 @@ with open(json_file_path, 'r') as file:
     # Load the JSON data into a Python dictionary
     data = json.load(file)
 cases_list = data.get('cases', [])
+length = len(cases_list)
 
 # init empty vectors
-fluid = []
-frictionCoeff = []
-constantGamma = []
-upstreamPress = []
-upstreamTemp = []
-upstreamMach = []
-upstreamVelocity = []
-standardVolFlow = []
-massFlow = []
-tubeDiameter = []
-tubeLength = []
-downstreamPressExpected = []
-downstreamTempExpected = []
-downstreamMachExpected = []
+fluid = [None] * length
+frictionCoeff = [None] * length
+constantGamma = [None] * length
+upstreamPress = [None] * length
+upstreamTemp = [None] * length
+upstreamMach = [None] * length
+upstreamVelocity = [None] * length
+standardVolFlow = [None] * length
+massFlow = [None] * length
+tubeDiameter = [None] * length
+tubeLength = [None] * length
+downstreamPressExpected = [None] * length
+downstreamTempExpected = [None] * length
+downstreamMachExpected = [None] * length
 
 for case in cases_list:
     # Assign values to variables based on the found case
@@ -42,24 +43,24 @@ for case in cases_list:
     fluid[caseNo] = case.get('fluid')
     frictionCoeff[caseNo] = case.get('frictionCoeff')
     constantGamma[caseNo] = case.get('constantGamma')
-    upstreamPress[caseNo] = case.get('upstreamPress') * u.pascal
+    upstreamPress[caseNo] = case.get('upstreamPress') * u.pascal if case.get('upstreamPress') is not None else None
     upstreamTemp[caseNo] = case.get('upstreamTemp')
     upstreamMach[caseNo] = case.get('upstreamMach')
     upstreamVelocity[caseNo] = case.get('upstreamVelocity')
     standardVolFlow[caseNo] = case.get('standardVolFlow')
     massFlow[caseNo] = case.get('massFlow')
-    tubeDiameter[caseNo] = case.get('tubeDiameter') * u.meter
-    tubeLength[caseNo] = case.get('tubeLength') * u.meter
-    downstreamPressExpected[caseNo] = case.get('downstreamPress') * u.pascal
+    tubeDiameter[caseNo] = case.get('tubeDiameter') * u.meter if case.get('tubeDiameter') is not None else None
+    tubeLength[caseNo] = case.get('tubeLength') * u.meter if case.get('tubeLength') is not None else None
+    downstreamPressExpected[caseNo] = case.get('downstreamPress') * u.pascal if case.get('downstreamPress') is not None else None
     downstreamTempExpected[caseNo] = case.get('downstreamTemp')
     downstreamMachExpected[caseNo] = case.get('downstreamMach')
 
     # add units to all optional variables, if passed
-    upstreamTemp[caseNo] = Q_(upstreamTemp, u.kelvin) if upstreamTemp is not None else None
-    upstreamVelocity[caseNo] = upstreamVelocity *u.meter/u.second if upstreamVelocity is not None else None
-    standardVolFlow[caseNo] = standardVolFlow * u.foot**3/u.second if standardVolFlow is not None else None
-    massFlow = massFlow[caseNo] * u.kilogram/u.second if massFlow is not None else None
-    downstreamTempExpected[caseNo] = Q_(downstreamTempExpected, u.kelvin) if downstreamTempExpected is not None else None
+    upstreamTemp[caseNo] = Q_(upstreamTemp[caseNo], u.kelvin) if upstreamTemp[caseNo] is not None else None
+    upstreamVelocity[caseNo] = upstreamVelocity[caseNo] *u.meter/u.second if upstreamVelocity[caseNo] is not None else None
+    standardVolFlow[caseNo] = standardVolFlow[caseNo] * u.foot**3/u.second if standardVolFlow[caseNo] is not None else None
+    massFlow[caseNo] = massFlow[caseNo] * u.kilogram/u.second if massFlow[caseNo] is not None else None
+    downstreamTempExpected[caseNo] = Q_(downstreamTempExpected[caseNo], u.kelvin) if downstreamTempExpected[caseNo] is not None else None
 
 class FannoFlowTests(unittest.TestCase):
     # when adding new tests, copy-past def test_1 and modify value of testno
