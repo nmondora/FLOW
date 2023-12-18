@@ -34,6 +34,7 @@ for case in cases_list:
     caseNo = case.get('caseNo')
     fluid = case.get('fluid')
     frictionCoeff = case.get('frictionCoeff')
+    constantGamma = case.get('constantGamma')
     upstreamPress = case.get('upstreamPress') * u.pascal
     upstreamTemp = case.get('upstreamTemp')
     upstreamMach = case.get('upstreamMach')
@@ -53,19 +54,23 @@ for case in cases_list:
     massFlow = massFlow * u.kilogram/u.second if massFlow is not None else None
     downstreamTempExpected = Q_(downstreamTempExpected, u.kelvin) if downstreamTempExpected is not None else None
 
-    # run fannoFlow() and assign outputs
-    downstreamMach, downstreamPress, downstreamTemp = fannoFlow.fannoFlow(u, fluid=fluid, upstreamPress=upstreamPress, 
-                                                                         tubeDiam=tubeDiameter, tubeLen=tubeLength,
-                                                                         frictionCoeff=frictionCoeff, upstreamTemp=upstreamTemp,
-                                                                         standardVolFlow=standardVolFlow, massFlow=massFlow,
-                                                                         upstreamMach=upstreamMach, upstreamVel=upstreamVelocity)
+    gamma = [None, constantGamma]
+    msg = ["Using CoolProp value for gamma", "Using passed value for gamma"]
 
-    # check if outputs match expected values
-    print(TextColors.MAGENTA + f'Test Case: {caseNo}' + TextColors.END)
-    downstreamMachSpread, textColor = spread(downstreamMach, downstreamMachExpected, tol)
-    print(f'{textColor}\tDownstream Mach:  {downstreamMachSpread:.2f}% ({downstreamMach:0.3f} vs. {downstreamMachExpected:0.3f})\033[0m')
-    downstreamTempSpread, textColor = spread(downstreamTemp.magnitude, downstreamTempExpected.magnitude, tol)
-    print(f'{textColor}\tDownstream Temp:  {downstreamTempSpread:.2f}% ({downstreamTemp:0.3f} vs. {downstreamTempExpected:0.3f})\033[0m')
-    downstreamPressSpread, textColor = spread(downstreamPress.magnitude, downstreamPressExpected.magnitude, tol)
-    print(f'{textColor}\tDownstream Press: {downstreamPressSpread:.2f}% ({downstreamPress:0.3f} vs. {downstreamPressExpected:0.3f})\033[0m')
+    for i in range(2):
+        # run fannoFlow() and assign outputs
+        downstreamMach, downstreamPress, downstreamTemp = fannoFlow.fannoFlow(u, fluid=fluid, upstreamPress=upstreamPress, 
+                                                                            tubeDiam=tubeDiameter, tubeLen=tubeLength,
+                                                                            frictionCoeff=frictionCoeff, upstreamTemp=upstreamTemp,
+                                                                            standardVolFlow=standardVolFlow, massFlow=massFlow,
+                                                                            upstreamMach=upstreamMach, upstreamVel=upstreamVelocity, gamma=gamma[i])
+
+        # check if outputs match expected values
+        print(TextColors.MAGENTA + f'Test Case: {caseNo}' + TextColors.END)
+        downstreamMachSpread, textColor = spread(downstreamMach, downstreamMachExpected, tol)
+        print(f'{textColor}\tDownstream Mach:  {downstreamMachSpread:.2f}% ({downstreamMach:0.3f} vs. {downstreamMachExpected:0.3f})\033[0m')
+        downstreamTempSpread, textColor = spread(downstreamTemp.magnitude, downstreamTempExpected.magnitude, tol)
+        print(f'{textColor}\tDownstream Temp:  {downstreamTempSpread:.2f}% ({downstreamTemp:0.3f} vs. {downstreamTempExpected:0.3f})\033[0m')
+        downstreamPressSpread, textColor = spread(downstreamPress.magnitude, downstreamPressExpected.magnitude, tol)
+        print(f'{textColor}\tDownstream Press: {downstreamPressSpread:.2f}% ({downstreamPress:0.3f} vs. {downstreamPressExpected:0.3f})\033[0m\n')
 

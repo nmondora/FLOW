@@ -1,7 +1,9 @@
-def fannoFlow(u, fluid, upstreamPress, tubeDiam, tubeLen, frictionCoeff=0.58, upstreamTemp=None, standardVolFlow=None, massFlow=None, upstreamMach=None, upstreamVel=None):
+def fannoFlow(u, fluid, upstreamPress, tubeDiam, tubeLen, frictionCoeff=0.58, upstreamTemp=None, 
+              standardVolFlow=None, massFlow=None, upstreamMach=None, upstreamVel=None, gamma=None):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
     # Fanno Flow  -  Flow in relatively short line with constant area, adiabatic frictional
     #   Inputs:
+    #       u:                Unit registry (pint)
     #       upstreamPress:    Upstream pressure (required)
     #       unstreamTemp:     Upstream temperature (optional, default 68C)
     #       tubeDiam:         Tube inner diameter (required)
@@ -13,6 +15,8 @@ def fannoFlow(u, fluid, upstreamPress, tubeDiam, tubeLen, frictionCoeff=0.58, up
     #        standardVolFlow: Volumetric flow rate in SCFM
     #          OR
     #        upstreamMach:    Upstream mach number
+    #          OR
+    #        upstreamVel:     Upstream flow velocity
     #   Outputs:
     #       downstreamMach:   Downstream mach number
     #       downstreamPress:  Downstream static pressure
@@ -47,9 +51,8 @@ def fannoFlow(u, fluid, upstreamPress, tubeDiam, tubeLen, frictionCoeff=0.58, up
     # find specific heats of fluid at upstream conditions
     Cp = cp.PropsSI('C', 'T', upstreamTemp.magnitude, 'P', upstreamPress.magnitude, fluid)
     Cv = cp.PropsSI('O', 'T', upstreamTemp.magnitude, 'P', upstreamPress.magnitude, fluid)
-    gamma = Cp / Cv
-    #gamma = 1.4
-    print(f'gamma: {gamma}')
+    gamma is not None and print('\033[96m' + "↓↓ Using passed value for gamma: " + f'{gamma} ↓↓' + '\033[0m')
+    gamma = Cp / Cv if gamma is None else gamma
 
     # if M1 is not known, find it
     if upstreamMach is None:
