@@ -38,7 +38,7 @@ downstreamMachExpected = []
 
 for case in cases_list:
     # Assign values to variables based on the found case
-    caseNo = case.get('caseNo')
+    caseNo = case.get('caseNo') - 1
     fluid[caseNo] = case.get('fluid')
     frictionCoeff[caseNo] = case.get('frictionCoeff')
     constantGamma[caseNo] = case.get('constantGamma')
