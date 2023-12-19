@@ -46,51 +46,51 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
 <div class="w3-row-padding w3-padding-32 w3-container">
     <div class="w3-content">
       <h1>Inputs</h1>
-      <form action="/process_inputs" method="post">
+      <form action="/fanno" method="post">
         <div class="w3-row">
           <div class="w3-quarter">
             <label for="fluid">Fluid:</label>
-            <input type="text" id="fluid" name="fluid" class="w3-input w3-border" style="width: 75%;" required>
+            <input type="text" id="fluid" name="fluid" class="w3-input w3-border" style="width: 75%;" value={{fluid}}>
           </div>
           <div class="w3-quarter">
             <label for="gamma">gamma:</label>
-            <input type="text" id="gamma" name="gamma" class="w3-input w3-border" style="width: 75%;">
+            <input type="text" id="gamma" name="gamma" class="w3-input w3-border" style="width: 75%;" value="{{gamma}}">
           </div>
           <div class="w3-quarter">
             <label for="tubeDiam">Tube Diam:</label>
-            <input type="text" id="tubeDiam" name="tubeDiam" class="w3-input w3-border" style="width: 75%;">
+            <input type="text" id="tubeDiam" name="tubeDiam" class="w3-input w3-border" style="width: 75%;" value="{{tubeDiam}}">
           </div>
           <div class="w3-quarter">
             <label for="tubeLen">Tube Length:</label>
-            <input type="text" id="tubeLen" name="tubeLen" class="w3-input w3-border" style="width: 75%;">
+            <input type="text" id="tubeLen" name="tubeLen" class="w3-input w3-border" style="width: 75%;" value="{{tubeLen}}">
           </div>
           <div class="w3-quarter">
             <label for="frictionCoeff">f:</label>
-            <input type="text" id="frictionCoeff" name="frictionCoeff" class="w3-input w3-border" style="width: 75%;">
+            <input type="text" id="frictionCoeff" name="frictionCoeff" class="w3-input w3-border" style="width: 75%;" value="{{frictionCoeff}}">
           </div>
           <div class="w3-quarter">
             <label for="standardVolFlow">SCFM:</label>
-            <input type="text" id="standardVolFlow" name="standardVolFlow" class="w3-input w3-border" style="width: 75%;">
+            <input type="text" id="standardVolFlow" name="standardVolFlow" class="w3-input w3-border" style="width: 75%;" value="{{standardVolFlow}}">
           </div>
           <div class="w3-quarter">
             <label for="massFlow">Mass Flow:</label>
-            <input type="text" id="massFlow" name="massFlow" class="w3-input w3-border" style="width: 75%;">
+            <input type="text" id="massFlow" name="massFlow" class="w3-input w3-border" style="width: 75%;" value="{{massFlow}}">
           </div>
           <div class="w3-quarter">
             <label for="upstreamMach">M1:</label>
-            <input type="text" id="upstreamMach" name="upstreamMach" class="w3-input w3-border" style="width: 75%;">
+            <input type="text" id="upstreamMach" name="upstreamMach" class="w3-input w3-border" style="width: 75%;" value=""{{upstreamMach}}>
           </div>
           <div class="w3-quarter">
             <label for="upstreamVel">V1:</label>
-            <input type="text" id="upstreamVel" name="upstreamVel" class="w3-input w3-border" style="width: 75%;">
+            <input type="text" id="upstreamVel" name="upstreamVel" class="w3-input w3-border" style="width: 75%;" value="{{upstreamVel}}">
           </div>
           <div class="w3-quarter">
             <label for="upstreamPress">P1:</label>
-            <input type="text" id="upstreamPress" name="upstreamPress" class="w3-input w3-border" style="width: 75%;">
+            <input type="text" id="upstreamPress" name="upstreamPress" class="w3-input w3-border" style="width: 75%;" value="{{upstreamPress}}">
           </div>
           <div class="w3-quarter">
             <label for="upstreamTemp">T1:</label>
-            <input type="text" id="upstreamTemp" name="upstreamTemp" class="w3-input w3-border" style="width: 75%;">
+            <input type="text" id="upstreamTemp" name="upstreamTemp" class="w3-input w3-border" style="width: 75%;" value="{{upstreamTemp}}">
           </div>
           <!-- Repeat the above block for input2 to input10 -->
           <!-- Example:
