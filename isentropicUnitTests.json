@@ -48,6 +48,7 @@
                 "regime": "sup"
             },
             "outputs": {
+                "M": 3.0,
                 "P0_P": 36.7327,
                 "P0_Pstar": 1.89293,
                 "T0_T": 2.8,
@@ -55,6 +56,60 @@
                 "rho0_rho": 13.1188,
                 "rho0_rhostar": 1.57744,
                 "a0_a": 1.67332
+            }
+        },
+        {
+            "caseNo": 4,
+            "inputs": {
+                "fluid": "air",
+                "gamma": 1.4,
+                "A_Astar": 2.4956,
+                "regime": "subsonic"
+            },
+            "outputs": {
+                "M": 0.24,
+                "P0_P": 1.0409,
+                "P0_Pstar": 1.89293,
+                "T0_T": 1.0115,
+                "T0_Tstar": 1.2,
+                "rho0_rho": 1.029,
+                "rho0_rhostar": 1.57744,
+                "a0_a": 1.00574
+            }
+        },
+        {
+            "caseNo": 5,
+            "inputs": {
+                "fluid": "air",
+                "gamma": 1.4,
+                "T0_T": 1.1217
+            },
+            "outputs": {
+                "M": 0.78,
+                "P0_P": 1.4947,
+                "P0_Pstar": 1.89293,
+                "T0_Tstar": 1.2,
+                "rho0_rho": 1.3325,
+                "rho0_rhostar": 1.57744,
+                "a0_a": 1.05909
+            }
+        },
+        {
+            "caseNo": 6,
+            "inputs": {
+                "fluid": "air",
+                "regime": "super",
+                "gamma": 1.4,
+                "P0_P": 74.1337
+            },
+            "outputs": {
+                "M": 3.48,
+                "P0_Pstar": 1.89293,
+                "T0_T": 3.4221,
+                "T0_Tstar": 1.2,
+                "rho0_rho": 21.6633,
+                "rho0_rhostar": 1.57744,
+                "a0_a": 1.84989
             }
         }
     ]

@@ -129,8 +129,8 @@ def runIsentropicTest(testno, i, self):
     self.assertTrue(P_OUT[i] is None or spread(out.get('P'), P_OUT[i]) <= tol, f'P spread failed in test_{testno}')
     self.assertTrue(P0_OUT[i] is None or spread(out.get('P0'), P0_OUT[i]) <= tol, f'P0 spread failed in test_{testno}')
     self.assertTrue(Pstar_OUT[i] is None or spread(out.get('Pstar'), Pstar_OUT[i]) <= tol, f'Pstar spread failed in test_{testno}')
-    self.assertTrue(P0_P_OUT[i] is None or spread(out.get('P0_Pstar'), P0_Pstar_OUT[i]) <= tol, f'P0_Pstar spread failed in test_{testno}')
-    self.assertTrue(P0_Pstar_OUT[i] is None or spread(out.get('P0_P'), P0_P_OUT[i]) <= tol, f'P0_P spread failed in test_{testno}')
+    self.assertTrue(P0_Pstar_OUT[i] is None or spread(out.get('P0_Pstar'), P0_Pstar_OUT[i]) <= tol, f'P0_Pstar spread failed in test_{testno}')
+    self.assertTrue(P0_P_OUT[i] is None or spread(out.get('P0_P'), P0_P_OUT[i]) <= tol, f'P0_P spread failed in test_{testno}')
     self.assertTrue(T_OUT[i] is None or spread(out.get('T'), T_OUT[i]) <= tol, f'T spread failed in test_{testno}')
     self.assertTrue(T0_OUT[i] is None or spread(out.get('T0'), T0_OUT[i]) <= tol, f'T0 spread failed in test_{testno}')
     self.assertTrue(Tstar_OUT[i] is None or spread(out.get('Tstar'), Tstar_OUT[i]) <= tol, f'Tstar spread failed in test_{testno}')
@@ -145,7 +145,7 @@ def runIsentropicTest(testno, i, self):
     self.assertTrue(Astar_OUT[i] is None or spread(out.get('Astar'), Astar_OUT[i]) <= tol, f'Astar spread failed in test_{testno}')
     self.assertTrue(A_Astar_OUT[i] is None or spread(out.get('A_Astar'), A_Astar_OUT[i]) <= tol, f'A_Astar spread failed in test_{testno}')
     self.assertTrue(a0_a_OUT[i] is None or spread(out.get('a0_a'), a0_a_OUT[i]) <= tol, f'a0_a spread failed in test_{testno}')
-    
+
 ## HERE IS WHERE YOU ADD MORE TESTS ##
 class IsentropicFlowTests(unittest.TestCase):
     # when adding new tests, copy-past def test_1 and modify value of testno
@@ -161,6 +161,21 @@ class IsentropicFlowTests(unittest.TestCase):
 
     def test_3(self):
         testno = 3
+        i = testno - 1
+        runIsentropicTest(testno, i, self=self)
+
+    def test_4(self):
+        testno = 4
+        i = testno - 1
+        runIsentropicTest(testno, i, self=self)
+
+    def test_5(self):
+        testno = 5
+        i = testno - 1
+        runIsentropicTest(testno, i, self=self)
+
+    def test_6(self):
+        testno = 6
         i = testno - 1
         runIsentropicTest(testno, i, self=self)
 

@@ -16,7 +16,7 @@ def isentropicFlow(u, fluid, M=None, P=None, P0=None, Pstar=None, P0_P=None, P0_
     from pint import UnitRegistry
     from math import sqrt
     from CoolProp import CoolProp as cp
-    from scipy.optimize import fsolve
+    from scipy.optimize import fsolve, root_scalar
     #u = UnitRegistry()
     Q_ = u.Quantity
 
@@ -62,12 +62,10 @@ def isentropicFlow(u, fluid, M=None, P=None, P0=None, Pstar=None, P0_P=None, P0_
         a0_a = (1 + .5*gm1*M**2)**(.5)
 
         return P0_P, T0_T, rho0_rho, a0_a
-
-    if M is not None:
-        # check if there might be conflicting inputs
-        if A_Astar is not None or T0_T is not None or T0_Tstar is not None or P0_P is not None or P0_Pstar is not None or rho0_rho is not None or rho0_rhostar is not None or a0_a is not None:
-            warn('Too many inputs may be given. Solving using M')
-
+    
+    def iKnowMach(M, P, P0, Pstar, P0_P, P0_Pstar, T, T0, Tstar, T0_T, T0_Tstar, rho, rho0, rhostar, rho0_rho, 
+                  rho0_rhostar, A, Astar, A_Astar, a0_a, gamma):
+        
         # calculate ratio terms using M
         P0_Pstar, T0_Tstar, rho0_rhostar, A_Astar = criticalConditions(gamma, M)
         P0_P, T0_T, rho0_rho, a0_a = isentropicRelation(gamma, M)
@@ -90,6 +88,18 @@ def isentropicFlow(u, fluid, M=None, P=None, P0=None, Pstar=None, P0_P=None, P0_
         # calculate area terms based on what is / isn't known
         A = A_Astar * Astar if Astar is not None and A is None else A
         Astar = 1/A_Astar * A if A is not None and Astar is None else Astar
+
+        return (P, P0, Pstar, P0_P, P0_Pstar, T, T0, Tstar, T0_T, T0_Tstar, rho, rho0, rhostar, 
+                rho0_rho, rho0_rhostar, A, Astar, A_Astar, a0_a)
+
+    if M is not None:
+        # check if there might be conflicting inputs
+        if A_Astar is not None or T0_T is not None or T0_Tstar is not None or P0_P is not None or P0_Pstar is not None or rho0_rho is not None or rho0_rhostar is not None or a0_a is not None:
+            warn('Too many inputs may be given. Solving using M')
+
+        (P, P0, Pstar, P0_P, P0_Pstar, T, T0, Tstar, T0_T, T0_Tstar, rho, rho0, rhostar, rho0_rho, rho0_rhostar, 
+        A, Astar, A_Astar, a0_a) = iKnowMach(M, P, P0, Pstar, P0_P, P0_Pstar, T, T0, Tstar, T0_T, T0_Tstar, rho, 
+                                            rho0, rhostar, rho0_rho, rho0_rhostar, A, Astar, A_Astar, a0_a, gamma)
     elif A_Astar is not None:
         # check if there might be conflicting inputs
         if T0_T is not None or T0_Tstar is not None or P0_P is not None or P0_Pstar is not None or rho0_rho is not None or rho0_rhostar is not None or a0_a is not None:
@@ -99,27 +109,34 @@ def isentropicFlow(u, fluid, M=None, P=None, P0=None, Pstar=None, P0_P=None, P0_
         guess = 5 if regime == 'supersonic' or regime == 'sup' or regime == 'super' else 0.5
         M = fsolve(func, guess)
 
-        # calculate ratio terms using M
-        P0_Pstar, T0_Tstar, rho0_rhostar, A_Astar = criticalConditions(gamma, M)
-        P0_P, T0_T, rho0_rho, a0_a = isentropicRelation(gamma, M)
+        (P, P0, Pstar, P0_P, P0_Pstar, T, T0, Tstar, T0_T, T0_Tstar, rho, rho0, rhostar, rho0_rho, rho0_rhostar, 
+        A, Astar, A_Astar, a0_a) = iKnowMach(M, P, P0, Pstar, P0_P, P0_Pstar, T, T0, Tstar, T0_T, T0_Tstar, rho, 
+                                            rho0, rhostar, rho0_rho, rho0_rhostar, A, Astar, A_Astar, a0_a, gamma)
+    elif T0_T is not None:
+        # check if there might be conflicting inputs
+        if T0_Tstar is not None or P0_P is not None or P0_Pstar is not None or rho0_rho is not None or rho0_rhostar is not None or a0_a is not None:
+            warn('Too many inputs may be given. Solving using A/A*')
 
-        # calculare pressure terms based on what is / isn't known
-        P0 = P0_P * P if P is not None and P0 is None else P0_Pstar * Pstar if Pstar is not None and P0 is None else P0
-        P = 1/P0_P * P0 if P0 is not None and P is None else P
-        Pstar = 1/P0_Pstar * P0 if P0 is not None and Pstar is None else Pstar
+        func = lambda M: 1 + .5*gm1*M**2 - T0_T
+        M = fsolve(func, 1)
 
-        # calculate temp terms based on what is / isn't known
-        T0 = T0_T * T if T is not None and T0 is None else T0_Tstar * Tstar if Tstar is not None and T0 is None else T0
-        T = 1/T0_T * T0 if T0 is not None and T is None else T
-        Tstar = 1/T0_Tstar * T0 if T0 is not None and Tstar is None else Tstar
+        (P, P0, Pstar, P0_P, P0_Pstar, T, T0, Tstar, T0_T, T0_Tstar, rho, rho0, rhostar, rho0_rho, rho0_rhostar, 
+        A, Astar, A_Astar, a0_a) = iKnowMach(M, P, P0, Pstar, P0_P, P0_Pstar, T, T0, Tstar, T0_T, T0_Tstar, rho, 
+                                            rho0, rhostar, rho0_rho, rho0_rhostar, A, Astar, A_Astar, a0_a, gamma)
+    elif P0_P is not None:
+        # check if there might be conflicting inputs
+        if T0_Tstar is not None or P0_Pstar is not None or rho0_rho is not None or rho0_rhostar is not None or a0_a is not None:
+            warn('Too many inputs may be given. Solving using A/A*')
 
-        # calculate density terms based on what is / isn't known
-        rho0 = rho0_rho * rho if rho is not None and rho0 is None else rho0_rhostar * rhostar if rhostar is not None and rho0 is None else rho0
-        rho = 1/rho0_rho * rho0 if rho0 is not None and rho is None else rho
-        rhostar = 1/rho0_rhostar * rho0 if rho0 is not None and rhostar is None else rhostar
+        func = lambda M: (1 + .5*gm1*M**2)**(gamma/gm1) - P0_P
+        guess = 5 if regime == 'supersonic' or regime == 'sup' or regime == 'super' else 0.5
+        M = fsolve(func, guess)
 
-        # calculate area terms based on what is / isn't known
-        A = A_Astar * Astar if Astar is not None and A is None else A
+        (P, P0, Pstar, P0_P, P0_Pstar, T, T0, Tstar, T0_T, T0_Tstar, rho, rho0, rhostar, rho0_rho, rho0_rhostar, 
+        A, Astar, A_Astar, a0_a) = iKnowMach(M, P, P0, Pstar, P0_P, P0_Pstar, T, T0, Tstar, T0_T, T0_Tstar, rho, 
+                                            rho0, rhostar, rho0_rho, rho0_rhostar, A, Astar, A_Astar, a0_a, gamma)
+    else:
+        raise("Hmmm...Check your inputs. Otherwise I don't yet support this type of calculation.")
 
     result = {
         'M': M, 'P': P, 'P0': P0, 'Pstar': Pstar, 'P0_P': P0_P, 'P0_Pstar': P0_Pstar, 'T': T, 'T0': T0,
