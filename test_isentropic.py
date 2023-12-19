@@ -23,6 +23,7 @@ length = len(cases_list)
 
 # init empty vectors
 fluid = [None] * length
+regime = [None] * length
 M_IN = [None] * length
 M_OUT = [None] * length
 P_IN = [None] * length
@@ -63,6 +64,8 @@ rho0_rhostar_IN = [None] * length
 rho0_rhostar_OUT = [None] * length
 A_Astar_IN = [None] * length
 A_Astar_OUT = [None] * length
+a0_a_IN = [None] * length
+a0_a_OUT = [None] * length
 
 for case in cases_list:
     # Assign values to variables based on the found case
@@ -70,8 +73,8 @@ for case in cases_list:
     inputs = case.get('inputs', [])
     outputs = case.get('outputs', [])
 
-    fluid[caseNo] = case.get('fluid')
-
+    fluid[caseNo] = inputs.get('fluid')
+    regime[caseNo] = inputs.get('regime')
     M_IN[caseNo] = inputs.get('M')
     M_OUT[caseNo] = outputs.get('M')
     P_IN[caseNo] = inputs.get('P') * u.pascal if inputs.get('P') is not None else None
@@ -112,12 +115,15 @@ for case in cases_list:
     rho0_rhostar_OUT[caseNo] = outputs.get('rho0_rhostar')
     A_Astar_IN[caseNo] = inputs.get('A_Astar')
     A_Astar_OUT[caseNo] = outputs.get('A_Astar')
+    a0_a_IN[caseNo] = inputs.get('a0_a')
+    a0_a_OUT[caseNo] = outputs.get('a0_a')
 
 # call isentropicFlow() for a given test case and assert pass/fail
 def runIsentropicTest(testno, i, self):
-    out = isentropicFlow(u, fluid[i], M=M_IN[i], P=P_IN[i], P0=P0_IN[i], Pstar=Pstar_IN[i], 
-                                                                                     T=T_IN[i], T0=T0_IN[i], Tstar=Tstar_IN[i], rho=rho0_IN[i], rho0=rho0_IN[i], rhostar=rhostar_IN[i], A=A_IN[i], Astar=Astar_IN[i], 
-                                                                                     gamma=gamma_IN[i])
+    out = isentropicFlow(u, fluid[i], M=M_IN[i], P=P_IN[i], P0=P0_IN[i], Pstar=Pstar_IN[i], P0_P=P0_P_IN[i], P0_Pstar=P0_Pstar_IN[i], 
+                         T=T_IN[i], T0=T0_IN[i], Tstar=Tstar_IN[i], T0_T=T0_T_IN[i], T0_Tstar=T0_Tstar_IN[i], rho=rho_IN[i], 
+                         rho0=rho0_IN[i], rhostar=rhostar_IN[i], rho0_rho=rho0_rho_IN[i], rho0_rhostar=rho0_rhostar_IN[i], A=A_IN[i], 
+                         Astar=Astar_IN[i], A_Astar=A_Astar_IN[i], a0_a=a0_a_IN[i], gamma=gamma_IN[i], regime=regime[i])
         
     self.assertTrue(M_OUT[i] is None or spread(out.get('M'), M_OUT[i]) <= tol, f'M spread failed in test_{testno}')
     self.assertTrue(P_OUT[i] is None or spread(out.get('P'), P_OUT[i]) <= tol, f'P spread failed in test_{testno}')
@@ -138,6 +144,7 @@ def runIsentropicTest(testno, i, self):
     self.assertTrue(A_OUT[i] is None or spread(out.get('A'), A_OUT[i]) <= tol, f'A spread failed in test_{testno}')
     self.assertTrue(Astar_OUT[i] is None or spread(out.get('Astar'), Astar_OUT[i]) <= tol, f'Astar spread failed in test_{testno}')
     self.assertTrue(A_Astar_OUT[i] is None or spread(out.get('A_Astar'), A_Astar_OUT[i]) <= tol, f'A_Astar spread failed in test_{testno}')
+    self.assertTrue(a0_a_OUT[i] is None or spread(out.get('a0_a'), a0_a_OUT[i]) <= tol, f'a0_a spread failed in test_{testno}')
     
 ## HERE IS WHERE YOU ADD MORE TESTS ##
 class IsentropicFlowTests(unittest.TestCase):
@@ -149,6 +156,11 @@ class IsentropicFlowTests(unittest.TestCase):
           
     def test_2(self):
         testno = 2
+        i = testno - 1
+        runIsentropicTest(testno, i, self=self)
+
+    def test_3(self):
+        testno = 3
         i = testno - 1
         runIsentropicTest(testno, i, self=self)
 
