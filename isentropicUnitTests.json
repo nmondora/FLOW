@@ -9,12 +9,12 @@
             },
             "outputs": {
                 "P0_P": 1.0884,
-                "P0_Pstar": 1.7392,
+                "P0_Pstar": 1.89293,
                 "T0_T": 1.0245,
-                "T0_Tstar": 1.1713,
+                "T0_Tstar": 1.2,
                 "rho0_rho": 1.0624,
-                "rho0_rhostar": 1.4848,
-                "A_Astar": 7
+                "rho0_rhostar": 1.57744,
+                "A_Astar": 1.7780
             }
         }
     ]
