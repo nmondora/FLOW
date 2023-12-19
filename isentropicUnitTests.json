@@ -1,0 +1,21 @@
+{
+    "cases": [
+        {
+            "caseNo": 1,
+            "inputs": {
+                "fluid": "air",
+                "M": 0.35,
+                "gamma": 1.4
+            },
+            "outputs": {
+                "P0_P": 1.0884,
+                "P0_Pstar": 1.7392,
+                "T0_T": 1.0245,
+                "T0_Tstar": 1.1713,
+                "rho0_rho": 1.0624,
+                "rho0_rhostar": 1.4848,
+                "A_Astar": 7
+            }
+        }
+    ]
+}

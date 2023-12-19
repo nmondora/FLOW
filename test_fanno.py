@@ -111,3 +111,6 @@ class FannoFlowTests(unittest.TestCase):
         self.assertTrue(downstreamMachSpread <= tol, f'Mach spread failed in test_{testno}')
         self.assertTrue(downstreamTempSpread <= tol, f'Temp spread failed in test_{testno}')
         self.assertTrue(downstreamPressSpread <= tol, f'Press spread failed in test_{testno}')
+
+if __name__ == '__main__':
+    unittest.main()

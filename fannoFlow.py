@@ -51,7 +51,6 @@ def fannoFlow(u, fluid, upstreamPress, tubeDiam, tubeLen, frictionCoeff=0.58, up
     # find specific heats of fluid at upstream conditions
     Cp = cp.PropsSI('C', 'T', upstreamTemp.magnitude, 'P', upstreamPress.magnitude, fluid)
     Cv = cp.PropsSI('O', 'T', upstreamTemp.magnitude, 'P', upstreamPress.magnitude, fluid)
-    gamma is not None and print('\033[96m' + "↓↓ Using passed value for gamma: " + f'{gamma} ↓↓' + '\033[0m')
     gamma = Cp / Cv if gamma is None else gamma
 
     # if M1 is not known, find it
