@@ -1,4 +1,8 @@
 from flask import Flask, redirect, url_for, render_template, request
+from FLOW import fannoFlow as fF
+from pint import UnitRegistry
+u = UnitRegistry()
+Q_ = u.Quantity
 
 app = Flask(__name__)
 
@@ -22,6 +26,12 @@ def fanno():
         upstreamVel = request.form["upstreamVel"]
         upstreamPress = request.form["upstreamPress"]
         upstreamTemp = request.form["upstreamTemp"]
+
+        downstreamMach, downstreamPress, downstreamTemp = fF.fannoFlow(u, fluid=fluid, upstreamPress=upstreamPress, 
+                                                                         tubeDiam=tubeDiam, tubeLen=tubeLen,
+                                                                         frictionCoeff=frictionCoeff, upstreamTemp=upstreamTemp,
+                                                                         standardVolFlow=standardVolFlow, massFlow=massFlow,
+                                                                         upstreamMach=upstreamMach, upstreamVel=upstreamVel)
 
         return render_template("fanno.html", fluid=fluid, gamma=gamma, tubeDiam=tubeDiam,
                                tubeLen=tubeLen, frictionCoeff=frictionCoeff, standardVolFlow=standardVolFlow,
