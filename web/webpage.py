@@ -27,16 +27,41 @@ def fanno():
         upstreamPress = request.form["upstreamPress"]
         upstreamTemp = request.form["upstreamTemp"]
 
+        gamma = float(gamma) if gamma else None
+        tubeDiam = float(tubeDiam)*u.meter if tubeDiam else None
+        tubeLen = float(tubeLen)*u.meter if tubeLen else None
+        frictionCoeff = float(frictionCoeff) if frictionCoeff else None
+        standardVolFlow = float(standardVolFlow)*u.foot**3/u.second if standardVolFlow else None
+        massFlow = float(massFlow)*u.kilogram/u.meter if massFlow else None
+        upstreamMach = float(upstreamMach) if upstreamMach else None
+        upstreamVel = float(upstreamVel)*u.meter/u.second if upstreamVel else None
+        upstreamPress = float(upstreamPress)*u.pascal if upstreamPress else None
+        upstreamTemp = Q_(float(upstreamTemp),u.kelvin) if upstreamTemp else None 
+
         downstreamMach, downstreamPress, downstreamTemp = fF.fannoFlow(u, fluid=fluid, upstreamPress=upstreamPress, 
                                                                          tubeDiam=tubeDiam, tubeLen=tubeLen,
                                                                          frictionCoeff=frictionCoeff, upstreamTemp=upstreamTemp,
                                                                          standardVolFlow=standardVolFlow, massFlow=massFlow,
                                                                          upstreamMach=upstreamMach, upstreamVel=upstreamVel)
+        
+        gamma = "" if gamma is None else gamma
+        tubeDiam = "" if tubeDiam is None else tubeDiam
+        tubeLen = "" if tubeDiam is None else tubeLen
+        frictionCoeff = "" if frictionCoeff is None else frictionCoeff
+        standardVolFlow = "" if standardVolFlow is None else standardVolFlow
+        massFlow = "" if massFlow is None else massFlow
+        upstreamMach = "" if upstreamMach is None else upstreamMach
+        downstreamMach = "" if downstreamMach is None else downstreamMach
+        upstreamVel = "" if upstreamVel is None else upstreamVel
+        upstreamPress = "" if upstreamPress is None else upstreamPress
+        downstreamPress = "" if downstreamPress is None else downstreamPress
+        upstreamTemp = "" if upstreamTemp is None else upstreamTemp
+        downstreamTemp = "" if downstreamTemp is None else downstreamTemp
 
         return render_template("fanno.html", fluid=fluid, gamma=gamma, tubeDiam=tubeDiam,
                                tubeLen=tubeLen, frictionCoeff=frictionCoeff, standardVolFlow=standardVolFlow,
-                               massFlow=massFlow, upstreamMach=upstreamMach, upstreamVel=upstreamVel,
-                               upstreamPress=upstreamPress, upstreamTemp=upstreamTemp)
+                               massFlow=massFlow, upstreamMach=upstreamMach, downstreamMach=downstreamMach, upstreamVel=upstreamVel,
+                               upstreamPress=upstreamPress, downstreamPress=downstreamPress, upstreamTemp=upstreamTemp, downstreamTemp=downstreamTemp)
     else:
         fluid = ""
         gamma = ""
