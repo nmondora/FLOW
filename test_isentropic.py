@@ -122,6 +122,34 @@ class IsentropicFlowTests(unittest.TestCase):
         out = isentropicFlow(u, fluid[i], M=M_IN[i], P=P_IN[i], P0=P0_IN[i], Pstar=Pstar_IN[i], 
                                                                                      T=T_IN[i], T0=T0_IN[i], Tstar=Tstar_IN[i], rho=rho0_IN[i], rho0=rho0_IN[i], rhostar=rhostar_IN[i], A=A_IN[i], Astar=Astar_IN[i], 
                                                                                      gamma=gamma_IN[i])
+        
+        self.assertTrue(M_OUT[i] is None or spread(out.get('M'), M_OUT[i]) <= tol, f'M spread failed in test_{testno}')
+        self.assertTrue(P_OUT[i] is None or spread(out.get('P'), P_OUT[i]) <= tol, f'P spread failed in test_{testno}')
+        self.assertTrue(P0_OUT[i] is None or spread(out.get('P0'), P0_OUT[i]) <= tol, f'P0 spread failed in test_{testno}')
+        self.assertTrue(Pstar_OUT[i] is None or spread(out.get('Pstar'), Pstar_OUT[i]) <= tol, f'Pstar spread failed in test_{testno}')
+        self.assertTrue(P0_P_OUT[i] is None or spread(out.get('P0_Pstar'), P0_Pstar_OUT[i]) <= tol, f'P0_Pstar spread failed in test_{testno}')
+        self.assertTrue(P0_Pstar_OUT[i] is None or spread(out.get('P0_P'), P0_P_OUT[i]) <= tol, f'P0_P spread failed in test_{testno}')
+        self.assertTrue(T_OUT[i] is None or spread(out.get('T'), T_OUT[i]) <= tol, f'T spread failed in test_{testno}')
+        self.assertTrue(T0_OUT[i] is None or spread(out.get('T0'), T0_OUT[i]) <= tol, f'T0 spread failed in test_{testno}')
+        self.assertTrue(Tstar_OUT[i] is None or spread(out.get('Tstar'), Tstar_OUT[i]) <= tol, f'Tstar spread failed in test_{testno}')
+        self.assertTrue(T0_T_OUT[i] is None or spread(out.get('T0_T'), T0_T_OUT[i]) <= tol, f'T0_T spread failed in test_{testno}')
+        self.assertTrue(T0_Tstar_OUT[i] is None or spread(out.get('T0_Tstar'), T0_Tstar_OUT[i]) <= tol, f'T0_Tstar spread failed in test_{testno}')
+        self.assertTrue(rho_OUT[i] is None or spread(out.get('rho'), rho_OUT[i]) <= tol, f'rho spread failed in test_{testno}')
+        self.assertTrue(rho0_OUT[i] is None or spread(out.get('rho0'), rho0_OUT[i]) <= tol, f'rho0 spread failed in test_{testno}')
+        self.assertTrue(rhostar_OUT[i] is None or spread(out.get('rhostar'), rhostar_OUT[i]) <= tol, f'rhostar spread failed in test_{testno}')
+        self.assertTrue(rho0_rho_OUT[i] is None or spread(out.get('rho0_rho'), rho0_rho_OUT[i]) <= tol, f'rho0_rho spread failed in test_{testno}')
+        self.assertTrue(rho0_rhostar_OUT[i] is None or spread(out.get('rho0_rhostar'), rho0_rhostar_OUT[i]) <= tol, f'rho0_rhostar spread failed in test_{testno}')
+        self.assertTrue(A_OUT[i] is None or spread(out.get('A'), A_OUT[i]) <= tol, f'A spread failed in test_{testno}')
+        self.assertTrue(Astar_OUT[i] is None or spread(out.get('Astar'), Astar_OUT[i]) <= tol, f'Astar spread failed in test_{testno}')
+        self.assertTrue(A_Astar_OUT[i] is None or spread(out.get('A_Astar'), A_Astar_OUT[i]) <= tol, f'A_Astar spread failed in test_{testno}')
+        
+    def test_2(self):
+        testno = 2
+        i = testno - 1
+
+        out = isentropicFlow(u, fluid[i], M=M_IN[i], P=P_IN[i], P0=P0_IN[i], Pstar=Pstar_IN[i], 
+                                                                                     T=T_IN[i], T0=T0_IN[i], Tstar=Tstar_IN[i], rho=rho0_IN[i], rho0=rho0_IN[i], rhostar=rhostar_IN[i], A=A_IN[i], Astar=Astar_IN[i], 
+                                                                                     gamma=gamma_IN[i])
 
         self.assertTrue(M_OUT[i] is None or spread(out.get('M'), M_OUT[i]) <= tol, f'M spread failed in test_{testno}')
         self.assertTrue(P_OUT[i] is None or spread(out.get('P'), P_OUT[i]) <= tol, f'P spread failed in test_{testno}')

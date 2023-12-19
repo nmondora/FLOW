@@ -64,23 +64,23 @@ def isentropicFlow(u, fluid, M=None, P=None, P0=None, Pstar=None, T=None, T0=Non
         P0_Pstar, T0_Tstar, rho0_rhostar, A_Astar = criticalConditions(gamma, M)
         P0_P, T0_T, rho0_rho, a0_a = isentropicRelation(gamma, M)
 
-        P0 = P0_P * P if P is not None and P0 is None else P0_Pstar * Pstar if Pstar is not None and P0 is None else None
-        P = 1/P0_P * P0 if P0 is not None and P is None else None
-        Pstar = 1/P0_Pstar * P0 if P0 is not None and Pstar is None else None
+        P0 = P0_P * P if P is not None and P0 is None else P0_Pstar * Pstar if Pstar is not None and P0 is None else P0
+        P = 1/P0_P * P0 if P0 is not None and P is None else P
+        Pstar = 1/P0_Pstar * P0 if P0 is not None and Pstar is None else Pstar
 
-        T0 = T0_T * T if T is not None and T0 is None else T0_Tstar * Tstar if Tstar is not None and T0 is None else None
-        T = 1/T0_T * T0 if T0 is not None and T is None else None
-        Tstar = 1/T0_Tstar * T0 if T0 is not None and Tstar is None else None
+        T0 = T0_T * T if T is not None and T0 is None else T0_Tstar * Tstar if Tstar is not None and T0 is None else T0
+        T = 1/T0_T * T0 if T0 is not None and T is None else T
+        Tstar = 1/T0_Tstar * T0 if T0 is not None and Tstar is None else Tstar
 
-        rho0 = rho0_rho * rho if rho is not None and rho0 is None else rho0_rhostar * rhostar if rhostar is not None and rho0 is None else None
-        rho = 1/rho0_rho * rho0 if rho0 is not None and rho is None else None
-        rhostar = 1/rho0_rhostar * rho0 if rho0 is not None and rhostar is None else None
+        rho0 = rho0_rho * rho if rho is not None and rho0 is None else rho0_rhostar * rhostar if rhostar is not None and rho0 is None else rho0
+        rho = 1/rho0_rho * rho0 if rho0 is not None and rho is None else rho
+        rhostar = 1/rho0_rhostar * rho0 if rho0 is not None and rhostar is None else rhostar
 
-        A = A_Astar * Astar if Astar is not None and A is None else None
-        Astar = 1/A_Astar * A if A is not None and Astar is None else None
+        A = A_Astar * Astar if Astar is not None and A is None else A
+        Astar = 1/A_Astar * A if A is not None and Astar is None else Astar
 
         result = {
-            'M': M, 'P': P, 'P0': P0, 'Pstar': Pstar, 'P0_P': P0_P, 'P0_Pstar': P0_Pstar,'T': T, 'T0': T0,
+            'M': M, 'P': P, 'P0': P0, 'Pstar': Pstar, 'P0_P': P0_P, 'P0_Pstar': P0_Pstar, 'T': T, 'T0': T0,
             'Tstar': Tstar, 'T0_T': T0_T, 'T0_Tstar': T0_Tstar,'rho': rho, 'rho0': rho0, 'rhostar': rhostar,
             'rho0_rho': rho0_rho, 'rho0_rhostar': rho0_rhostar, 'A': A, 'Astar': Astar, 'A_Astar': A_Astar, 'a0_a': a0_a
         }
