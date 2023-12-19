@@ -79,6 +79,12 @@ def isentropicFlow(u, fluid, M=None, P=None, P0=None, Pstar=None, T=None, T0=Non
         A = A_Astar * Astar if Astar is not None and A is None else None
         Astar = 1/A_Astar * A if A is not None and Astar is None else None
 
-        return M, P, P0, Pstar, T, T0, Tstar, rho, rho0, rhostar, A, Astar
+        result = {
+            'M': M, 'P': P, 'P0': P0, 'Pstar': Pstar, 'P0_P': P0_P, 'P0_Pstar': P0_Pstar,'T': T, 'T0': T0,
+            'Tstar': Tstar, 'T0_T': T0_T, 'T0_Tstar': T0_Tstar,'rho': rho, 'rho0': rho0, 'rhostar': rhostar,
+            'rho0_rho': rho0_rho, 'rho0_rhostar': rho0_rhostar, 'A': A, 'Astar': Astar, 'A_Astar': A_Astar, 'a0_a': a0_a
+        }
+
+        return result
     
 
