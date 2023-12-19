@@ -2,7 +2,7 @@ import unittest
 from pint import UnitRegistry
 u = UnitRegistry()
 Q_ = u.Quantity
-import fannoFlow
+from FLOW import fannoFlow
 import json
 
 tol = .5 # Values must match withing 0.5%
