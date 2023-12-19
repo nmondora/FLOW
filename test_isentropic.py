@@ -118,8 +118,9 @@ class IsentropicFlowTests(unittest.TestCase):
     def test_1(self):
         testno = 1
         i = testno - 1
-        M_out, P_out, P0_out, Pstar_out, T_out, T0_out, Tstar_out, rho_out, rho0_out, rhostar_out, A_out, Astar_out = isentropicFlow(u, fluid, M=None, P=None, P0=None, Pstar=None, 
-                                                                                     T=None, T0=None, Tstar=None, rho=None, rho0=None, rhostar=None, A=None, Astar=None, gamma=None)
+        M_out, P_out, P0_out, Pstar_out, T_out, T0_out, Tstar_out, rho_out, rho0_out, rhostar_out, A_out, Astar_out = isentropicFlow(u, fluid, M=M_IN, P=P_IN, P0=P0_IN, Pstar=Pstar_IN, 
+                                                                                     T=T_IN, T0=T0_IN, Tstar=Tstar_IN, rho=rho0_IN, rho0=rho0_IN, rhostar=rhostar_IN, A=A_IN, Astar=Astar_IN, 
+                                                                                     gamma=gamma_IN)
         self.assertTrue(spread(M_out, M_OUT) <= tol, f'M spread failed in test_{testno}') if M_OUT is not None else None
         self.assertTrue(spread(P_out, P_OUT) <= tol, f'P spread failed in test_{testno}') if P_OUT is not None else None
         self.assertTrue(spread(P0_out, P0_OUT) <= tol, f'P0 spread failed in test_{testno}') if P0_OUT is not None else None
