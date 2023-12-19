@@ -1,4 +1,4 @@
-def isentropicFlow(u, fluid, M=None, P=None, P0=None, Pstar=None, P0_P=None, P0_Pstar=None, T=None, T0=None, Tstar=None, 
+def isentropicFlow(u, fluid=None, M=None, P=None, P0=None, Pstar=None, P0_P=None, P0_Pstar=None, T=None, T0=None, Tstar=None, 
                    T0_T=None, T0_Tstar=None, rho=None, rho0=None, rhostar=None, rho0_rho=None, rho0_rhostar=None, A=None, 
                    Astar=None, A_Astar=None, a0_a=None, gamma=None, regime=None):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -118,6 +118,7 @@ def isentropicFlow(u, fluid, M=None, P=None, P0=None, Pstar=None, P0_P=None, P0_
             warn('Too many inputs may be given. Solving using A/A*')
 
         func = lambda M: 1 + .5*gm1*M**2 - T0_T
+        guess = 5 if regime == 'supersonic' or regime == 'sup' or regime == 'super' else 0.5
         M = fsolve(func, 1)
 
         (P, P0, Pstar, P0_P, P0_Pstar, T, T0, Tstar, T0_T, T0_Tstar, rho, rho0, rhostar, rho0_rho, rho0_rhostar, 
