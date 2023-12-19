@@ -118,21 +118,22 @@ class IsentropicFlowTests(unittest.TestCase):
     def test_1(self):
         testno = 1
         i = testno - 1
-        M_out, P_out, P0_out, Pstar_out, T_out, T0_out, Tstar_out, rho_out, rho0_out, rhostar_out, A_out, Astar_out = isentropicFlow(u, fluid, M=M_IN, P=P_IN, P0=P0_IN, Pstar=Pstar_IN, 
-                                                                                     T=T_IN, T0=T0_IN, Tstar=Tstar_IN, rho=rho0_IN, rho0=rho0_IN, rhostar=rhostar_IN, A=A_IN, Astar=Astar_IN, 
-                                                                                     gamma=gamma_IN)
-        self.assertTrue(spread(M_out, M_OUT) <= tol, f'M spread failed in test_{testno}') if M_OUT is not None else None
-        self.assertTrue(spread(P_out, P_OUT) <= tol, f'P spread failed in test_{testno}') if P_OUT is not None else None
-        self.assertTrue(spread(P0_out, P0_OUT) <= tol, f'P0 spread failed in test_{testno}') if P0_OUT is not None else None
-        self.assertTrue(spread(Pstar_out, Pstar_OUT) <= tol, f'Pstar spread failed in test_{testno}') if Pstar_OUT is not None else None
-        self.assertTrue(spread(T_out, T_OUT) <= tol, f'T spread failed in test_{testno}') if T_OUT is not None else None
-        self.assertTrue(spread(T0_out, T0_OUT) <= tol, f'T0 spread failed in test_{testno}') if T0_OUT is not None else None
-        self.assertTrue(spread(Tstar_out, Tstar_OUT) <= tol, f'Tstar spread failed in test_{testno}') if Tstar_OUT is not None else None
-        self.assertTrue(spread(rho_out, rho_OUT) <= tol, f'rho spread failed in test_{testno}') if rho_OUT is not None else None
-        self.assertTrue(spread(rho0_out, rho0_OUT) <= tol, f'rho0 spread failed in test_{testno}') if rho0_OUT is not None else None
-        self.assertTrue(spread(rhostar_out, rhostar_OUT) <= tol, f'rhostar spread failed in test_{testno}') if rhostar_OUT is not None else None
-        self.assertTrue(spread(A_out, A_OUT) <= tol, f'A spread failed in test_{testno}') if A_OUT is not None else None
-        self.assertTrue(spread(Astar_out, Astar_OUT) <= tol, f'Astar spread failed in test_{testno}') if Astar_OUT is not None else None
+
+        M_out, P_out, P0_out, Pstar_out, T_out, T0_out, Tstar_out, rho_out, rho0_out, rhostar_out, A_out, Astar_out = isentropicFlow(u, fluid[i], M=M_IN[i], P=P_IN[i], P0=P0_IN[i], Pstar=Pstar_IN[i], 
+                                                                                     T=T_IN[i], T0=T0_IN[i], Tstar=Tstar_IN[i], rho=rho0_IN[i], rho0=rho0_IN[i], rhostar=rhostar_IN[i], A=A_IN[i], Astar=Astar_IN[i], 
+                                                                                     gamma=gamma_IN[i])
+        self.assertTrue(M_OUT[i] is None or spread(M_out, M_OUT[i]) <= tol, f'M spread failed in test_{testno}')
+        self.assertTrue(P_OUT[i] is None or spread(P_out, P_OUT[i]) <= tol, f'P spread failed in test_{testno}')
+        self.assertTrue(P0_OUT[i] is None or spread(P0_out, P0_OUT[i]) <= tol, f'P0 spread failed in test_{testno}')
+        self.assertTrue(Pstar_OUT[i] is None or spread(Pstar_out, Pstar_OUT[i]) <= tol, f'Pstar spread failed in test_{testno}')
+        self.assertTrue(T_OUT[i] is None or spread(T_out, T_OUT[i]) <= tol, f'T spread failed in test_{testno}')
+        self.assertTrue(T0_OUT[i] is None or spread(T0_out, T0_OUT[i]) <= tol, f'T0 spread failed in test_{testno}')
+        self.assertTrue(Tstar_OUT[i] is None or spread(Tstar_out, Tstar_OUT[i]) <= tol, f'Tstar spread failed in test_{testno}')
+        self.assertTrue(rho_OUT[i] is None or spread(rho_out, rho_OUT[i]) <= tol, f'rho spread failed in test_{testno}')
+        self.assertTrue(rho0_OUT[i] is None or spread(rho0_out, rho0_OUT[i]) <= tol, f'rho0 spread failed in test_{testno}')
+        self.assertTrue(rhostar_OUT[i] is None or spread(rhostar_out, rhostar_OUT[i]) <= tol, f'rhostar spread failed in test_{testno}')
+        self.assertTrue(A_OUT[i] is None or spread(A_out, A_OUT[i]) <= tol, f'A spread failed in test_{testno}')
+        self.assertTrue(Astar_OUT[i] is None or spread(Astar_out, Astar_OUT[i]) <= tol, f'Astar spread failed in test_{testno}')
 
 
 if __name__ == '__main__':

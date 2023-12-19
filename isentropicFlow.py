@@ -81,4 +81,4 @@ def isentropicFlow(u, fluid, M=None, P=None, P0=None, Pstar=None, T=None, T0=Non
 
         return M, P, P0, Pstar, T, T0, Tstar, rho, rho0, rhostar, A, Astar
     
-    
+
