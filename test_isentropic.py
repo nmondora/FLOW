@@ -2,7 +2,7 @@ import unittest
 from pint import UnitRegistry
 u = UnitRegistry()
 Q_ = u.Quantity
-import isentropicFlow
+from isentropicFlow import isentropicFlow
 import json
 
 tol = .5 # Values must match withing 0.5%
