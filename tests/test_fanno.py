@@ -6,7 +6,7 @@ from ..calculators import fannoFlow
 import json
 import os
 
-# Get the directory of the current script
+# get the directory of the current script
 script_directory = os.path.dirname(os.path.abspath(__file__))
 
 tol = .5 # Values must match withing 0.5%
