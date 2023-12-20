@@ -2,7 +2,7 @@ import unittest
 from pint import UnitRegistry
 u = UnitRegistry()
 Q_ = u.Quantity
-from isentropicFlow import isentropicFlow
+from ..calculators import isentropicFlow
 import json
 
 tol = .5 # Values must match withing 0.5%
@@ -14,7 +14,7 @@ def spread(value1, value2):
     return percentage_difference
 
 # load test case data
-json_file_path = 'isentropicUnitTests.json'
+json_file_path = './tests/isentropicUnitTests.json'
 with open(json_file_path, 'r') as file:
     # Load the JSON data into a Python dictionary
     data = json.load(file)
@@ -120,7 +120,7 @@ for case in cases_list:
 
 # call isentropicFlow() for a given test case and assert pass/fail
 def runIsentropicTest(testno, i, self):
-    out = isentropicFlow(u, fluid[i], M=M_IN[i], P=P_IN[i], P0=P0_IN[i], Pstar=Pstar_IN[i], P0_P=P0_P_IN[i], P0_Pstar=P0_Pstar_IN[i], 
+    out = isentropicFlow.isentropicFlow(u, fluid[i], M=M_IN[i], P=P_IN[i], P0=P0_IN[i], Pstar=Pstar_IN[i], P0_P=P0_P_IN[i], P0_Pstar=P0_Pstar_IN[i], 
                          T=T_IN[i], T0=T0_IN[i], Tstar=Tstar_IN[i], T0_T=T0_T_IN[i], T0_Tstar=T0_Tstar_IN[i], rho=rho_IN[i], 
                          rho0=rho0_IN[i], rhostar=rhostar_IN[i], rho0_rho=rho0_rho_IN[i], rho0_rhostar=rho0_rhostar_IN[i], A=A_IN[i], 
                          Astar=Astar_IN[i], A_Astar=A_Astar_IN[i], a0_a=a0_a_IN[i], gamma=gamma_IN[i], regime=regime[i])
