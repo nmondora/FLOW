@@ -4,6 +4,10 @@ u = UnitRegistry()
 Q_ = u.Quantity
 from ..calculators import fannoFlow
 import json
+import os
+
+# Get the directory of the current script
+script_directory = os.path.dirname(os.path.abspath(__file__))
 
 tol = .5 # Values must match withing 0.5%
 
@@ -14,7 +18,7 @@ def spread(value1, value2):
     return percentage_difference
 
 # load test case data
-json_file_path = './tests/fannoUnitTests.json'
+json_file_path = os.path.join(script_directory, 'fannoUnitTests.json')
 with open(json_file_path, 'r') as file:
     # Load the JSON data into a Python dictionary
     data = json.load(file)
