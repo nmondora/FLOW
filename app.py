@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request
-from .calculators import fannoFlow
+from calculators import fannoFlow
 from pint import UnitRegistry
 u = UnitRegistry()
 Q_ = u.Quantity
