@@ -1,5 +1,5 @@
 from flask import Flask, redirect, url_for, render_template, request
-from FLOW import fannoFlow as fF
+from .. import fannoFlow
 from pint import UnitRegistry
 u = UnitRegistry()
 Q_ = u.Quantity
@@ -38,7 +38,7 @@ def fanno():
         upstreamPress = float(upstreamPress)*u.pascal if upstreamPress else None
         upstreamTemp = Q_(float(upstreamTemp),u.kelvin) if upstreamTemp else None 
 
-        downstreamMach, downstreamPress, downstreamTemp = fF.fannoFlow(u, fluid=fluid, upstreamPress=upstreamPress, 
+        downstreamMach, downstreamPress, downstreamTemp = fannoFlow(u, fluid=fluid, upstreamPress=upstreamPress, 
                                                                          tubeDiam=tubeDiam, tubeLen=tubeLen,
                                                                          frictionCoeff=frictionCoeff, upstreamTemp=upstreamTemp,
                                                                          standardVolFlow=standardVolFlow, massFlow=massFlow,
