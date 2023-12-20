@@ -1,10 +1,10 @@
 from flask import Flask, render_template, request
-from ..calculators import fannoFlow
+from .calculators import fannoFlow
 from pint import UnitRegistry
 u = UnitRegistry()
 Q_ = u.Quantity
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='web/templates')
 
 # Define the home page
 @app.route("/")
@@ -93,4 +93,4 @@ def shocks():
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+    app.run()
