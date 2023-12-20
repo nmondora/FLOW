@@ -67,11 +67,11 @@ class FannoFlowTests(unittest.TestCase):
     def test_1(self):
         testno = 1
         i = testno - 1
-        downstreamMach, downstreamPress, downstreamTemp = fannoFlow.fannoFlow(u, fluid=fluid[i], upstreamPress=upstreamPress[i], 
+        downstreamMach, downstreamPress, downstreamTemp = fannoFlow.fannoFlow(u, upstreamPress=upstreamPress[i], 
                                                                     tubeDiam=tubeDiameter[i], tubeLen=tubeLength[i],
                                                                     frictionCoeff=frictionCoeff[i], upstreamTemp=upstreamTemp[i],
                                                                     standardVolFlow=standardVolFlow[i], massFlow=massFlow[i],
-                                                                    upstreamMach=upstreamMach[i], upstreamVel=upstreamVelocity[i], gamma=constantGamma[i])
+                                                                    upstreamMach=upstreamMach[i], upstreamVel=upstreamVelocity[i], gamma=constantGamma[i], fluid=fluid[i])
         
         downstreamMachSpread = spread(downstreamMach, downstreamMachExpected[i])
         downstreamTempSpread = spread(downstreamTemp.magnitude, downstreamTempExpected[i].magnitude)
@@ -83,11 +83,11 @@ class FannoFlowTests(unittest.TestCase):
     def test_2(self):
         testno = 2
         i = testno - 1
-        downstreamMach, downstreamPress, downstreamTemp = fannoFlow.fannoFlow(u, fluid=fluid[i], upstreamPress=upstreamPress[i], 
+        downstreamMach, downstreamPress, downstreamTemp = fannoFlow.fannoFlow(u, upstreamPress=upstreamPress[i], 
                                                                     tubeDiam=tubeDiameter[i], tubeLen=tubeLength[i],
                                                                     frictionCoeff=frictionCoeff[i], upstreamTemp=upstreamTemp[i],
                                                                     standardVolFlow=standardVolFlow[i], massFlow=massFlow[i],
-                                                                    upstreamMach=upstreamMach[i], upstreamVel=upstreamVelocity[i], gamma=constantGamma[i])
+                                                                    upstreamMach=upstreamMach[i], upstreamVel=upstreamVelocity[i], gamma=constantGamma[i], fluid=fluid[i])
         
         downstreamMachSpread = spread(downstreamMach, downstreamMachExpected[i])
         downstreamTempSpread = spread(downstreamTemp.magnitude, downstreamTempExpected[i].magnitude)
@@ -99,11 +99,11 @@ class FannoFlowTests(unittest.TestCase):
     def test_3(self):
         testno = 3
         i = testno - 1
-        downstreamMach, downstreamPress, downstreamTemp = fannoFlow.fannoFlow(u, fluid=fluid[i], upstreamPress=upstreamPress[i], 
+        downstreamMach, downstreamPress, downstreamTemp = fannoFlow.fannoFlow(u, upstreamPress=upstreamPress[i], 
                                                                     tubeDiam=tubeDiameter[i], tubeLen=tubeLength[i],
                                                                     frictionCoeff=frictionCoeff[i], upstreamTemp=upstreamTemp[i],
                                                                     standardVolFlow=standardVolFlow[i], massFlow=massFlow[i],
-                                                                    upstreamMach=upstreamMach[i], upstreamVel=upstreamVelocity[i], gamma=constantGamma[i])
+                                                                    upstreamMach=upstreamMach[i], upstreamVel=upstreamVelocity[i], gamma=constantGamma[i], fluid=fluid[i])
         
         downstreamMachSpread = spread(downstreamMach, downstreamMachExpected[i])
         downstreamTempSpread = spread(downstreamTemp.magnitude, downstreamTempExpected[i].magnitude)
