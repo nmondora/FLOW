@@ -2,7 +2,7 @@ import unittest
 from pint import UnitRegistry
 u = UnitRegistry()
 Q_ = u.Quantity
-import fannoFlow
+from ..calculators import fannoFlow
 import json
 
 tol = .5 # Values must match withing 0.5%
@@ -14,7 +14,7 @@ def spread(value1, value2):
     return percentage_difference
 
 # load test case data
-json_file_path = 'fannoTests.json'
+json_file_path = './tests/fannoUnitTests.json'
 with open(json_file_path, 'r') as file:
     # Load the JSON data into a Python dictionary
     data = json.load(file)

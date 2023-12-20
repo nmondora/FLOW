@@ -28,7 +28,7 @@ def fannoFlow(u, fluid, upstreamPress, tubeDiam, tubeLen, frictionCoeff=0.58, up
     #u = UnitRegistry()
     Q_ = u.Quantity
     import math
-    from FLOW import standardFlow_TO_massFlow
+    from ..calculators import standardFlow_TO_massFlow
     from scipy.optimize import root_scalar
     import numpy as np
 
@@ -56,7 +56,7 @@ def fannoFlow(u, fluid, upstreamPress, tubeDiam, tubeLen, frictionCoeff=0.58, up
     # if M1 is not known, find it
     if upstreamMach is None:
         # Convert to mass flow rate, if needed
-        massFlow = standardFlow_TO_massFlow(standardVolFlow) if standardVolFlow else massFlow
+        massFlow = standardFlow_TO_massFlow.standardFlow_TO_massFlow(standardVolFlow) if standardVolFlow else massFlow
 
         if upstreamVel is None:
             # find velocity   (continuity)
