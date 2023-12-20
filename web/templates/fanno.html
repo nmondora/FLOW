@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>W3.CSS Template</title>
+<title>Fanno Flow</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -50,47 +50,39 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
         <div class="w3-row">
           <div class="w3-quarter">
             <label for="fluid">Fluid:</label>
-            <input type="text" id="fluid" name="fluid" class="w3-input w3-border" style="width: 75%;" value={{fluid}}>
+            <input type="text" id="fluid" name="fluid" class="w3-input w3-border" style="width: 75%; background-color: #FFD55D" oninput="changeBackgroundColorOpt('fluid', 'gamma')" value={{fluid}}>
           </div>
           <div class="w3-quarter">
             <label for="gamma">gamma:</label>
-            <input type="text" id="gamma" name="gamma" class="w3-input w3-border" style="width: 75%;" value="{{gamma}}">
+            <input type="text" id="gamma" name="gamma" class="w3-input w3-border" style="width: 75%; background-color: #FFD55D" oninput="changeBackgroundColorOpt('fluid', 'gamma')" value="{{gamma}}">
           </div>
           <div class="w3-quarter">
             <label for="tubeDiam">Tube Diam:</label>
-            <input type="text" id="tubeDiam" name="tubeDiam" class="w3-input w3-border" style="width: 75%;" value="{{tubeDiam}}">
+            <input type="text" id="tubeDiam" name="tubeDiam" class="w3-input w3-border" style="width: 75%; background-color: #FF5D5D" oninput="changeBackgroundColorOpt(this)" value="{{tubeDiam}}">
           </div>
           <div class="w3-quarter">
             <label for="tubeLen">Tube Length:</label>
-            <input type="text" id="tubeLen" name="tubeLen" class="w3-input w3-border" style="width: 75%;" value="{{tubeLen}}">
+            <input type="text" id="tubeLen" name="tubeLen" class="w3-input w3-border" style="width: 75%; background-color: #FF5D5D" oninput="changeBackgroundColorOpt(this)" value="{{tubeLen}}">
           </div>
           <div class="w3-quarter">
             <label for="frictionCoeff">f:</label>
-            <input type="text" id="frictionCoeff" name="frictionCoeff" class="w3-input w3-border" style="width: 75%;" value="{{frictionCoeff}}">
-          </div>
-          <div class="w3-quarter">
-            <label for="standardVolFlow">SCFM:</label>
-            <input type="text" id="standardVolFlow" name="standardVolFlow" class="w3-input w3-border" style="width: 75%;" value="{{standardVolFlow}}">
-          </div>
-          <div class="w3-quarter">
-            <label for="massFlow">Mass Flow:</label>
-            <input type="text" id="massFlow" name="massFlow" class="w3-input w3-border" style="width: 75%;" value="{{massFlow}}">
-          </div>
-          <div class="w3-quarter">
-            <label for="upstreamMach">M1:</label>
-            <input type="text" id="upstreamMach" name="upstreamMach" class="w3-input w3-border" style="width: 75%;" value="{{upstreamMach}}">
-          </div>
-          <div class="w3-quarter">
-            <label for="downstreamMach">M2:</label>
-            <input type="text" id="downstreamMach" name="downstreamMach" class="w3-input w3-border" style="width: 75%;" value="{{downstreamMach}}">
+            <input type="text" id="frictionCoeff" name="frictionCoeff" class="w3-input w3-border" style="width: 75%; background-color: #FF5D5D" oninput="changeBackgroundColorOpt(this)" value="{{frictionCoeff}}">
           </div>
           <div class="w3-quarter">
             <label for="upstreamVel">V1:</label>
             <input type="text" id="upstreamVel" name="upstreamVel" class="w3-input w3-border" style="width: 75%;" value="{{upstreamVel}}">
           </div>
           <div class="w3-quarter">
+            <label for="upstreamMach">M1:</label>
+            <input type="text" id="upstreamMach" name="upstreamMach" class="w3-input w3-border" style="width: 75%; background-color: #FF5D5D" oninput="changeBackgroundColorOpt(this)" value="{{upstreamMach}}">
+          </div>
+          <div class="w3-quarter">
+            <label for="downstreamMach">M2:</label>
+            <input type="text" id="downstreamMach" name="downstreamMach" class="w3-input w3-border" style="width: 75%;" value="{{downstreamMach}}">
+          </div>
+          <div class="w3-quarter">
             <label for="upstreamPress">P1:</label>
-            <input type="text" id="upstreamPress" name="upstreamPress" class="w3-input w3-border" style="width: 75%;" value="{{upstreamPress}}">
+            <input type="text" id="upstreamPress" name="upstreamPress" class="w3-input w3-border" style="width: 75%; background-color: #FF5D5D" oninput="changeBackgroundColorOpt(this)" value="{{upstreamPress}}">
           </div>
           <div class="w3-quarter">
             <label for="downstreamPress">P2:</label>
@@ -125,12 +117,11 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
     </div>
 
     <div class="w3-twothird">
-      <h1>Lorem Ipsum</h1>
-      <h5 class="w3-padding-32">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</h5>
+      <h1>About Fanno Flow</h1>
+      <h5 class="w3-padding-32">Use Fanno Flow calcs when your flow is adiabatic (no heat transfer) and reversible (no entropy generation) through a constant area duct.</h5>
 
-      <p class="w3-text-grey">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint
-        occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-        laboris nisi ut aliquip ex ea commodo consequat.</p>
+      <p class="w3-text-grey">Additional assumptions include: (1) The flow is steady, one-dimensional, and incompressible. (2) No mass is added or removed within the duct. 
+        (3) The friction factor is constant along the duct wall and can be determined experimentally or theoretically.</p>
     </div>
   </div>
 </div>
@@ -153,6 +144,34 @@ function myFunction() {
     x.className = x.className.replace(" w3-show", "");
   }
 }
+</script>
+
+<script>
+  function changeBackgroundColorOpt(inputElementId1, inputElementId2) {
+    // Get the input elements by their IDs
+    var inputElement1 = document.getElementById(inputElementId1);
+    var inputElement2 = document.getElementById(inputElementId2);
+
+    // Check if either input has text
+    if (inputElement1.value.trim() !== "" || inputElement2.value.trim() !== "") {
+      inputElement1.style.backgroundColor = 'lightgreen';  // Change background color for the first input
+      inputElement2.style.backgroundColor = 'lightgreen';  // Change background color for the second input
+    } else {
+      inputElement1.style.backgroundColor = '#FFD55D';  // Reset background color for the first input
+      inputElement2.style.backgroundColor = '#FFD55D';  // Reset background color for the second input
+    }
+  }
+</script>
+
+<script>
+  function changeBackgroundColor(inputElement) {
+    // Check if the input has text
+    if (inputElement.value.trim() !== "") {
+      inputElement.style.backgroundColor = 'lightgreen';  // Change background color if there is text
+    } else {
+      inputElement.style.backgroundColor = '#FF5D5D';  // Reset background color if there is no text
+    }
+  }
 </script>
 
 </body>

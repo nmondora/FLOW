@@ -1,5 +1,5 @@
-def fannoFlow(u, fluid, upstreamPress, tubeDiam, tubeLen, frictionCoeff=0.58, upstreamTemp=None, 
-              standardVolFlow=None, massFlow=None, upstreamMach=None, upstreamVel=None, gamma=None):
+def fannoFlow(u, upstreamPress, tubeDiam, tubeLen, frictionCoeff=0.58, upstreamTemp=None, 
+              standardVolFlow=None, massFlow=None, upstreamMach=None, upstreamVel=None, gamma=None, fluid=None):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
     # Fanno Flow  -  Flow in relatively short line with constant area, adiabatic frictional
     #   Inputs:
@@ -49,8 +49,12 @@ def fannoFlow(u, fluid, upstreamPress, tubeDiam, tubeLen, frictionCoeff=0.58, up
     area = math.pi * (tubeDiam/2)**2
 
     # find specific heats of fluid at upstream conditions
-    Cp = cp.PropsSI('C', 'T', upstreamTemp.magnitude, 'P', upstreamPress.magnitude, fluid)
-    Cv = cp.PropsSI('O', 'T', upstreamTemp.magnitude, 'P', upstreamPress.magnitude, fluid)
+    if fluid is not None and fluid != "":
+        Cp = cp.PropsSI('C', 'T', upstreamTemp.magnitude, 'P', upstreamPress.magnitude, fluid)
+        Cv = cp.PropsSI('O', 'T', upstreamTemp.magnitude, 'P', upstreamPress.magnitude, fluid)
+    else:
+        Cp = 10
+        Cv = 10
     gamma = Cp / Cv if gamma is None else gamma
 
     # if M1 is not known, find it
