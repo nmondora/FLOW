@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 from calculators import fannoFlow
 from pint import UnitRegistry
 u = UnitRegistry()
@@ -57,13 +57,25 @@ def fanno():
         upstreamTemp = "" if upstreamTemp is None else upstreamTemp.magnitude
         downstreamTemp = "" if downstreamTemp is None else downstreamTemp.magnitude
 
-        return render_template("fanno.html", fluid=fluid, gamma=gamma, tubeDiam=tubeDiam,
-                               tubeLen=tubeLen, frictionCoeff=frictionCoeff, standardVolFlow=standardVolFlow,
-                               massFlow=massFlow, upstreamMach=upstreamMach, downstreamMach=downstreamMach, upstreamVel=upstreamVel,
-                               upstreamPress=upstreamPress, downstreamPress=downstreamPress, upstreamTemp=upstreamTemp, downstreamTemp=downstreamTemp)
+        return jsonify({
+            "fluid": fluid,
+            "gamma": gamma,
+            "tubeDiam": tubeDiam,
+            "tubeLen": tubeLen,
+            "frictionCoeff": frictionCoeff,
+            "standardVolFlow": standardVolFlow,
+            "massFlow": massFlow,
+            "upstreamMach": upstreamMach,
+            "downstreamMach": downstreamMach,
+            "upstreamVel": upstreamVel,
+            "upstreamPress": upstreamPress,
+            "downstreamPress": downstreamPress,
+            "upstreamTemp": upstreamTemp,
+            "downstreamTemp": downstreamTemp
+        })
     else:
         fluid = ""
-        gamma = ""
+        gamma = "1.4"
         tubeDiam = ""
         tubeLen = ""
         frictionCoeff = ""
@@ -74,7 +86,7 @@ def fanno():
         upstreamPress = ""
         upstreamTemp = ""
 
-        return render_template("fanno.html")
+        return render_template("fanno.html", gamma=gamma)
 
 # Defining the rayleigh flow page
 @app.route("/rayleigh")
@@ -92,4 +104,5 @@ def shocks():
     return render_template("shocks.html")
 
 if __name__ == "__main__":
-    app.run(debug=False,host="0.0.0.0", port = 5000)
+    #app.run(debug=False,host="0.0.0.0", port = 5000) # prod
+    app.run() # dev
