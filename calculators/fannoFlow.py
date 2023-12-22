@@ -28,7 +28,7 @@ def fannoFlow(u, upstreamPress, tubeDiam, tubeLen, frictionCoeff=0.58, upstreamT
     #u = UnitRegistry()
     Q_ = u.Quantity
     import math
-    from ..calculators import standardFlow_TO_massFlow
+    from .standardFlow_TO_massFlow import standardFlow_TO_massFlow
     from scipy.optimize import root_scalar
     import numpy as np
 

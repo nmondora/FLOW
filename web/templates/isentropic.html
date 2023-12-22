@@ -1,80 +1,219 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>W3.CSS Template</title>
+<title>Isentropic Flow</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://kit.fontawesome.com/e4f401b6d1.js" crossorigin="anonymous"></script>
+<!-- Include jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <style>
 body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
 .w3-bar,h1,button {font-family: "Montserrat", sans-serif}
-.fa-anchor,.fa-coffee {font-size:200px}
+.fa-droplet {font-size:200px}
 </style>
+<script>
+  $(document).ready(function() {
+    $("form").submit(function(e) {
+      e.preventDefault();  // Prevent the default form submission
+
+      // Serialize the form data
+      var formData = $(this).serialize();
+
+      // Make an AJAX request to the Flask server
+      $.ajax({
+        type: "POST",
+        url: "/isentropic",
+        data: formData,
+        success: function(response) {
+          // Update the form fields with the response data
+          $("#fluid").val(response.fluid);
+          $("#M").val(response.M);
+          $("#P").val(response.P);
+          $("#P0").val(response.P0);
+          $("#Pstar").val(response.Pstar);
+          $("#P0_Pstar").val(response.P0_Pstar);
+          $("#T").val(response.T);
+          $("#T0").val(response.T0);
+          $("#Tstar").val(response.Tstar);
+          $("#T0_T").val(response.T0_T);
+          $("#T0_Tstar").val(response.T0_Tstar);
+          $("#rho").val(response.rho);
+          $("#rho0").val(response.rho0);
+          $("#rhostar").val(response.rhostar);
+          $("#rho0_rho").val(response.rho0_rho);
+          $("#rho0_rhostar").val(response.rho0_rhostar);
+          $("#A").val(response.A);
+          $("#Astar").val(response.Astar);
+          $("#A_Astar").val(response.A_Astar);
+          $("#a0_a").val(response.a0_a);
+          $("#gamma").val(response.gamma);
+          $("#regime").val(response.regime);
+        },
+        error: function(error) {
+          console.log("Error:", error);
+        }
+      });
+    });
+  });
+</script>
 </head>
 <body>
 
 <!-- Navbar -->
 <div class="w3-top">
-  <div class="w3-bar w3-red w3-card w3-left-align w3-large">
-    <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-red" href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
-    <a href="/" class="w3-bar-item w3-button w3-padding-large w3-hover-white">Home</a>
-    <a href="fanno" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Fanno</a>
-    <a href="rayleigh" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Rayleigh</a>
+  <div class="w3-bar w3-card w3-left-align w3-large" style="background-color: #0B2027;">
+    <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large" style="background-color: #0B2027;" href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+    <a href="/" class="w3-bar-item w3-button w3-padding-large w3-hover-white" style="color: #CFD7C7;">Home</a>
+    <a href="fanno" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" style="color: #CFD7C7;">Fanno</a>
+    <a href="rayleigh" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" style="color: #CFD7C7;">Rayleigh</a>
     <a href="isentropic" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-white">Isentropic</a>
-    <a href="shocks" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Shocks</a>
+    <a href="shocks" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" style="color: #CFD7C7;">Shocks</a>
   </div>
 
   <!-- Navbar on small screens -->
-  <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium w3-large">
-    <a href="#" class="w3-bar-item w3-button w3-padding-large">Link 1</a>
-    <a href="#" class="w3-bar-item w3-button w3-padding-large">Link 2</a>
-    <a href="#" class="w3-bar-item w3-button w3-padding-large">Link 3</a>
-    <a href="#" class="w3-bar-item w3-button w3-padding-large">Link 4</a>
+  <div id="navDemo" class="w3-bar-block w3-hide w3-hide-large w3-hide-medium w3-large" style="background-color: #0B2027;">
+    <a href="fanno" class="w3-bar-item w3-button w3-padding-large">Fanno</a>
+    <a href="rayleigh" class="w3-bar-item w3-button w3-padding-large">Rayleigh</a>
+    <a href="isentropic" class="w3-bar-item w3-button w3-padding-large">Isentropic</a>
+    <a href="shocks" class="w3-bar-item w3-button w3-padding-large">Shocks</a>
   </div>
 </div>
 
 <!-- Header -->
-<header class="w3-container w3-red w3-center" style="padding:128px 16px">
-  <h1 class="w3-margin w3-jumbo">FLOW</h1>
-  <p class="w3-xlarge">Calculator by Nick Mondora</p>
-  <button class="w3-button w3-black w3-padding-large w3-large w3-margin-top">Get Started</button>
+<header class="w3-container w3-center" style="padding:64px 16px 32px 16px; background-color: #70A9A1;">
+  <h1 class="w3-margin w3-jumbo">Isentropic Flow</h1>
 </header>
 
-<!-- First Grid -->
-<div class="w3-row-padding w3-padding-64 w3-container">
-  <div class="w3-content">
-    <div class="w3-twothird">
-      <h1>Lorem Ipsum</h1>
-      <h5 class="w3-padding-32">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</h5>
-
-      <p class="w3-text-grey">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint
-        occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-        laboris nisi ut aliquip ex ea commodo consequat.</p>
-    </div>
-
-    <div class="w3-third w3-center">
-      <i class="fa fa-anchor w3-padding-64 w3-text-red"></i>
+<!-- Calculator -->
+<!-- Third Grid: Calculator -->
+<div class="w3-row-padding w3-padding-32 w3-container">
+    <div class="w3-content">
+      <h1>Inputs</h1>
+      <form action="/isentropic" method="post">
+        <div class="w3-row">
+          <div class="w3-third">
+            <label for="gamma">Gamma:</label>
+            <input type="text" id="gamma" name="gamma" class="w3-input w3-border" style="width: 75%; background-color: #B9D2B1" oninput="changeBackgroundColorOpt('fluid', 'gamma')" value="{{gamma}}">
+          </div>
+          <div class="w3-third" style="text-align: center">
+            <div style="margin-top: 20px; margin-bottom: 20px;">OR</div>
+          </div>
+          <div class="w3-third">
+            <label for="fluid">Fluid:</label>
+            <input type="text" id="fluid" name="fluid" class="w3-input w3-border" style="width: 75%; background-color: #B9D2B1" oninput="changeBackgroundColorOpt('fluid', 'gamma')" value="{{fluid}}">
+          </div>
+          <div class="w3-third">
+            <label for="M">M:</label>
+            <input type="text" id="M" name="M" class="w3-input w3-border" style="width: 75%; background-color: #F1D6B8" oninput="changeBackgroundColor(this)" value="{{M}}">
+          </div>
+          <div class="w3-third">
+            <label for="A_Astar">A/A*:</label>
+            <input type="text" id="A_Astar" name="A_Astar" class="w3-input w3-border" style="width: 75%; background-color: #F1D6B8" oninput="changeBackgroundColor(this)" value="{{A_Astar}}">
+          </div>
+          <div class="w3-third">
+            <label for="regime">Sub/Super:</label>
+            <input type="text" id="regime" name="regime" class="w3-input w3-border" style="width: 75%; background-color: #F1D6B8" oninput="changeBackgroundColor(this)" value="{{regime}}">
+          </div>
+          <div class="w3-third">
+            <label for="P">P:</label>
+            <input type="text" id="P" name="P" class="w3-input w3-border" style="width: 75%;" value="{{P}}" placeholder="optional">
+          </div>
+          <div class="w3-third">
+            <label for="P0">P0:</label>
+            <input type="text" id="P0" name="P0" class="w3-input w3-border" style="width: 75%;" value="{{P0}}" placeholder="optional">
+          </div>
+          <div class="w3-third">
+            <label for="Pstar">P*:</label>
+            <input type="text" id="Pstar" name="Pstar" class="w3-input w3-border" style="width: 75%;" value="{{Pstar}}" placeholder="optional">
+          </div>
+          <div class="w3-third">
+            <label for="P0_P">P0/P:</label>
+            <input type="text" id="P0_P" name="P0_P" class="w3-input w3-border" style="width: 75%;" value="{{P0_P}}" placeholder="optional">
+          </div>
+          <div class="w3-third">
+            <label for="P0_Pstar">P0/P*:</label>
+            <input type="text" id="P0_Pstar" name="P0_Pstar" class="w3-input w3-border" style="width: 75%;" value="{{P0_Pstar}}" placeholder="optional">
+          </div>
+          <div class="w3-third">
+            <label for="T">T:</label>
+            <input type="text" id="T" name="T" class="w3-input w3-border" style="width: 75%;" value="{{T}}" placeholder="optional">
+          </div>
+          <div class="w3-third">
+            <label for="T0">T0:</label>
+            <input type="text" id="T0" name="T0" class="w3-input w3-border" style="width: 75%;" placeholder="optional" value="{{T0}}">
+          </div>
+          <div class="w3-third">
+            <label for="Tstar">T*:</label>
+            <input type="text" id="Tstar" name="Tstar" class="w3-input w3-border" style="width: 75%;" placeholder="optional" value="{{Tstar}}">
+          </div>
+          <div class="w3-third">
+            <label for="T0_T">T0/T:</label>
+            <input type="text" id="T0_T" name="T0_T" class="w3-input w3-border" style="width: 75%;" placeholder="optional" value="{{T0_T}}">
+          </div>
+          <div class="w3-third">
+            <label for="T0_Tstar">T0/T*:</label>
+            <input type="text" id="T0_Tstar" name="T0_Tstar" class="w3-input w3-border" style="width: 75%;" placeholder="optional" value="{{T0_Tstar}}">
+          </div>
+          <div class="w3-third">
+            <label for="rho">rho:</label>
+            <input type="text" id="rho" name="rho" class="w3-input w3-border" style="width: 75%;" placeholder="optional" value="{{rho}}">
+          </div>
+          <div class="w3-third">
+            <label for="rho0">rho0:</label>
+            <input type="text" id="rho0" name="rho0" class="w3-input w3-border" style="width: 75%;" placeholder="optional" value="{{rho0}}">
+          </div>
+          <div class="w3-third">
+            <label for="rhostar">rho*:</label>
+            <input type="text" id="rhostar" name="rhostar" class="w3-input w3-border" style="width: 75%;" placeholder="optional" value="{{rhostar}}">
+          </div>
+          <div class="w3-third">
+            <label for="rho0_rho">rho0/rho:</label>
+            <input type="text" id="rho0_rho" name="rho0_rho" class="w3-input w3-border" style="width: 75%;" placeholder="optional" value="{{rho0_rho}}">
+          </div>
+          <div class="w3-third">
+            <label for="rho0_rhostar">rho0/rho*:</label>
+            <input type="text" id="rho0_rhostar" name="rho0_rhostar" class="w3-input w3-border" style="width: 75%;" placeholder="optional" value="{{rho0_rhostar}}">
+          </div>
+          <div class="w3-third">
+            <label for="A">A:</label>
+            <input type="text" id="A" name="A" class="w3-input w3-border" style="width: 75%;" placeholder="optional" value="{{A}}">
+          </div>
+          <div class="w3-third">
+            <label for="Astar">A*:</label>
+            <input type="text" id="Astar" name="Astar" class="w3-input w3-border" style="width: 75%;" placeholder="optional" value="{{Astar}}">
+          </div>
+          <div class="w3-third">
+            <label for="a0_a">a0/a:</label>
+            <input type="text" id="a0_a" name="a0_a" class="w3-input w3-border" style="width: 75%;" placeholder="optional" value="{{a0_a}}">
+          </div>
+          <div class="w3-two-third">
+          </div>
+          <button class="w3-button w3-red w3-section" type="submit">Submit</button>
+        </div>
+      </form>
     </div>
   </div>
-</div>
 
 <!-- Second Grid -->
 <div class="w3-row-padding w3-light-grey w3-padding-64 w3-container">
   <div class="w3-content">
     <div class="w3-third w3-center">
-      <i class="fa fa-coffee w3-padding-64 w3-text-red w3-margin-right"></i>
+      <i class="fa fa-droplet w3-padding-64w3-margin-right" style="color: #40798C;"></i>
     </div>
 
     <div class="w3-twothird">
-      <h1>Lorem Ipsum</h1>
-      <h5 class="w3-padding-32">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</h5>
+      <h1>About Isentropic Flow</h1>
+      <h5 class="w3-padding-32">Hail, Hail to old Purdue! All hail to our old gold and black! Hail, 
+        Hail to old Purdue! Our friendship may she never lack. Ever grateful, ever true, Thus we raise 
+        our song anew, Of the days we've spent with you, All Hail our own Purdue!</h5>
 
-      <p class="w3-text-grey">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint
-        occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-        laboris nisi ut aliquip ex ea commodo consequat.</p>
+      <p class="w3-text-grey">Hail, Hail to old Purdue! All hail to our old gold and black! Hail, 
+        Hail to old Purdue! Our friendship may she never lack. Ever grateful, ever true, Thus we raise 
+        our song anew, Of the days we've spent with you, All Hail our own Purdue!</p>
     </div>
   </div>
 </div>
@@ -82,8 +221,8 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
 <!-- Footer -->
 <footer class="w3-container w3-padding-64 w3-center w3-opacity">  
   <div class="w3-xlarge w3-padding-32">
-    <i class="fa fa-twitter w3-hover-opacity"></i>
-    <i class="fa fa-linkedin w3-hover-opacity"></i>
+    <i class="fa-brands fa-x-twitter w3-hover-opacity" onclick="window.location.href='https://www.twitter.com/nick_mondora/'"></i>
+    <i class="fa fa-linkedin w3-hover-opacity" onclick="window.location.href='https://www.linkedin.com/in/nick-mondora/'"></i>
  </div>
 </footer>
 
@@ -97,6 +236,34 @@ function myFunction() {
     x.className = x.className.replace(" w3-show", "");
   }
 }
+</script>
+
+<script>
+  function changeBackgroundColorOpt(inputElementId1, inputElementId2) {
+    // Get the input elements by their IDs
+    var inputElement1 = document.getElementById(inputElementId1);
+    var inputElement2 = document.getElementById(inputElementId2);
+
+    // Check if either input has text
+    if (inputElement1.value.trim() !== "" || inputElement2.value.trim() !== "") {
+      inputElement1.style.backgroundColor = '#B9D2B1';  // Change background color for the first input
+      inputElement2.style.backgroundColor = '#B9D2B1';  // Change background color for the second input
+    } else {
+      inputElement1.style.backgroundColor = '#F1D6B8';  // Reset background color for the first input
+      inputElement2.style.backgroundColor = '#F1D6B8';  // Reset background color for the second input
+    }
+  }
+</script>
+
+<script>
+  function changeBackgroundColor(inputElement) {
+    // Check if the input has text
+    if (inputElement.value.trim() !== "") {
+      inputElement.style.backgroundColor = '#B9D2B1';  // Change background color if there is text
+    } else {
+      inputElement.style.backgroundColor = '#FBACBE';  // Reset background color if there is no text
+    }
+  }
 </script>
 
 </body>

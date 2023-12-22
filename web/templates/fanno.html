@@ -7,93 +7,139 @@
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://kit.fontawesome.com/e4f401b6d1.js" crossorigin="anonymous"></script>
+<!-- Include jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <style>
 body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
 .w3-bar,h1,button {font-family: "Montserrat", sans-serif}
-.fa-anchor,.fa-coffee {font-size:200px}
+.fa-droplet {font-size:200px}
 </style>
+<script>
+  $(document).ready(function() {
+    $("form").submit(function(e) {
+      e.preventDefault();  // Prevent the default form submission
+
+      // Serialize the form data
+      var formData = $(this).serialize();
+
+      // Make an AJAX request to the Flask server
+      $.ajax({
+        type: "POST",
+        url: "/fanno",
+        data: formData,
+        success: function(response) {
+          // Update the form fields with the response data
+          $("#fluid").val(response.fluid);
+          $("#gamma").val(response.gamma);
+          $("#tubeDiam").val(response.tubeDiam);
+          $("#tubeLen").val(response.tubeLen);
+          $("#frictionCoeff").val(response.frictionCoeff);
+          $("#upstreamVel").val(response.upstreamVel);
+          $("#upstreamMach").val(response.upstreamMach);
+          $("#downstreamMach").val(response.downstreamMach);
+          $("#upstreamPress").val(response.upstreamPress);
+          $("#downstreamPress").val(response.downstreamPress);
+          $("#upstreamTemp").val(response.upstreamTemp);
+          $("#downstreamTemp").val(response.downstreamTemp);
+        },
+        error: function(error) {
+          console.log("Error:", error);
+        }
+      });
+    });
+  });
+</script>
 </head>
 <body>
 
 <!-- Navbar -->
-<div class="w3-top">
-  <div class="w3-bar w3-red w3-card w3-left-align w3-large">
-    <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-red" href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
-    <a href="/" class="w3-bar-item w3-button w3-padding-large w3-hover-white">Home</a>
+  <div class="w3-bar w3-card w3-left-align w3-large" style="background-color: #0B2027;">
+    <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large" style="background-color: #0B2027;" href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+    <a href="/" class="w3-bar-item w3-button w3-padding-large w3-hover-white" style="color: #CFD7C7;">Home</a>
     <a href="fanno" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-white">Fanno</a>
-    <a href="rayleigh" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Rayleigh</a>
-    <a href="isentropic" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Isentropic</a>
-    <a href="shocks" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Shocks</a>
-  </div>
+    <a href="rayleigh" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" style="color: #CFD7C7;">Rayleigh</a>
+    <a href="isentropic" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" style="color: #CFD7C7;">Isentropic</a>
+    <a href="shocks" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" style="color: #CFD7C7;">Shocks</a>
 
   <!-- Navbar on small screens -->
-  <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium w3-large">
-    <a href="#" class="w3-bar-item w3-button w3-padding-large">Link 1</a>
-    <a href="#" class="w3-bar-item w3-button w3-padding-large">Link 2</a>
-    <a href="#" class="w3-bar-item w3-button w3-padding-large">Link 3</a>
-    <a href="#" class="w3-bar-item w3-button w3-padding-large">Link 4</a>
+  <div id="navDemo" class="w3-bar-block w3-hide w3-hide-large w3-hide-medium w3-large" style="background-color: #0B2027;">
+    <a href="fanno" class="w3-bar-item w3-button w3-padding-large">Fanno</a>
+    <a href="rayleigh" class="w3-bar-item w3-button w3-padding-large">Rayleigh</a>
+    <a href="isentropic" class="w3-bar-item w3-button w3-padding-large">Isentropic</a>
+    <a href="shocks" class="w3-bar-item w3-button w3-padding-large">Shocks</a>
   </div>
 </div>
 
 <!-- Header -->
-<header class="w3-container w3-red w3-center" style="padding:64px 16px 32px 16px">
+<header class="w3-container w3-center" style="padding:64px 16px 32px 16px; background-color: #70A9A1;">
   <h1 class="w3-margin w3-jumbo">Fanno Flow</h1>
 </header>
 
-<!-- Inputs -->
-<!-- Third Grid: User Inputs -->
+<!-- Calculator -->
+<!-- Third Grid: Calculator -->
 <div class="w3-row-padding w3-padding-32 w3-container">
     <div class="w3-content">
       <h1>Inputs</h1>
       <form action="/fanno" method="post">
         <div class="w3-row">
-          <div class="w3-quarter">
+          <div class="w3-third">
+            <label for="gamma">Gamma:</label>
+            <input type="text" id="gamma" name="gamma" class="w3-input w3-border" style="width: 75%; background-color: #B9D2B1" oninput="changeBackgroundColorOpt('fluid', 'gamma')" value="{{gamma}}">
+          </div>
+          <div class="w3-third" style="text-align: center">
+            <div style="margin-top: 20px; margin-bottom: 20px;">OR</div>
+          </div>
+          <div class="w3-third">
             <label for="fluid">Fluid:</label>
-            <input type="text" id="fluid" name="fluid" class="w3-input w3-border" style="width: 75%; background-color: #FFD55D" oninput="changeBackgroundColorOpt('fluid', 'gamma')" value={{fluid}}>
+            <input type="text" id="fluid" name="fluid" class="w3-input w3-border" style="width: 75%; background-color: #B9D2B1" oninput="changeBackgroundColorOpt('fluid', 'gamma')" value="{{fluid}}">
           </div>
-          <div class="w3-quarter">
-            <label for="gamma">gamma:</label>
-            <input type="text" id="gamma" name="gamma" class="w3-input w3-border" style="width: 75%; background-color: #FFD55D" oninput="changeBackgroundColorOpt('fluid', 'gamma')" value="{{gamma}}">
-          </div>
-          <div class="w3-quarter">
-            <label for="tubeDiam">Tube Diam:</label>
-            <input type="text" id="tubeDiam" name="tubeDiam" class="w3-input w3-border" style="width: 75%; background-color: #FF5D5D" oninput="changeBackgroundColor(this)" value="{{tubeDiam}}">
-          </div>
-          <div class="w3-quarter">
-            <label for="tubeLen">Tube Length:</label>
-            <input type="text" id="tubeLen" name="tubeLen" class="w3-input w3-border" style="width: 75%; background-color: #FF5D5D" oninput="changeBackgroundColor(this)" value="{{tubeLen}}">
-          </div>
-          <div class="w3-quarter">
-            <label for="frictionCoeff">f:</label>
-            <input type="text" id="frictionCoeff" name="frictionCoeff" class="w3-input w3-border" style="width: 75%; background-color: #FF5D5D" oninput="changeBackgroundColor(this)" value="{{frictionCoeff}}">
-          </div>
-          <div class="w3-quarter">
-            <label for="upstreamVel">V1:</label>
-            <input type="text" id="upstreamVel" name="upstreamVel" class="w3-input w3-border" style="width: 75%;" value="{{upstreamVel}}">
-          </div>
-          <div class="w3-quarter">
+          <div class="w3-third">
             <label for="upstreamMach">M1:</label>
-            <input type="text" id="upstreamMach" name="upstreamMach" class="w3-input w3-border" style="width: 75%; background-color: #FF5D5D" oninput="changeBackgroundColor(this)" value="{{upstreamMach}}">
+            <input type="text" id="upstreamMach" name="upstreamMach" class="w3-input w3-border" style="width: 75%; background-color: #F1D6B8" oninput="changeBackgroundColorOpt('upstreamMach', 'upstreamVel')" value="{{upstreamMach}}">
           </div>
+          <div class="w3-third" style="text-align: center;">
+            <div style="margin-top: 20px; margin-bottom: 20px;">OR</div>
+          </div>
+          <div class="w3-third">
+            <label for="upstreamVel">V1, m/s:</label>
+            <input type="text" id="upstreamVel" name="upstreamVel" class="w3-input w3-border" style="width: 75%; background-color: #F1D6B8;" oninput="changeBackgroundColorOpt('upstreamMach', 'upstreamVel')" value="{{upstreamVel}}">
+          </div>
+          <div class="w3-third">
+            <label for="tubeDiam">Tube Diam, m:</label>
+            <input type="text" id="tubeDiam" name="tubeDiam" class="w3-input w3-border" style="width: 75%; background-color: #FBACBE" oninput="changeBackgroundColor(this)" value="{{tubeDiam}}">
+          </div>
+          <div class="w3-third">
+            <label for="tubeLen">Tube Length, m:</label>
+            <input type="text" id="tubeLen" name="tubeLen" class="w3-input w3-border" style="width: 75%; background-color: #FBACBE" oninput="changeBackgroundColor(this)" value="{{tubeLen}}">
+          </div>
+          <div class="w3-third">
+            <label for="upstreamPress">P1, Pa:</label>
+            <input type="text" id="upstreamPress" name="upstreamPress" class="w3-input w3-border" style="width: 75%; background-color: #FBACBE" oninput="changeBackgroundColor(this)" value="{{upstreamPress}}">
+          </div>
+          <div class="w3-third">
+            <label for="frictionCoeff">f:</label>
+            <input type="text" id="frictionCoeff" name="frictionCoeff" class="w3-input w3-border" style="width: 75%; background-color: #FBACBE" oninput="changeBackgroundColor(this)" value="{{frictionCoeff}}">
+          </div>
+          <div class="w3-third">
+            <label for="upstreamTemp">T1, K:</label>
+            <input type="text" id="upstreamTemp" name="upstreamTemp" class="w3-input w3-border" style="width: 75%;" value="{{upstreamTemp}}" placeholder="optional">
+          </div>
+          <div class="w3-three-quarter">
+          </div>
+          </div>
+          <button class="w3-button w3-red w3-section" type="submit">Submit</button>
+          <h1>Outputs</h1>
           <div class="w3-quarter">
             <label for="downstreamMach">M2:</label>
             <input type="text" id="downstreamMach" name="downstreamMach" class="w3-input w3-border" style="width: 75%;" value="{{downstreamMach}}">
           </div>
           <div class="w3-quarter">
-            <label for="upstreamPress">P1:</label>
-            <input type="text" id="upstreamPress" name="upstreamPress" class="w3-input w3-border" style="width: 75%; background-color: #FF5D5D" oninput="changeBackgroundColor(this)" value="{{upstreamPress}}">
-          </div>
-          <div class="w3-quarter">
-            <label for="downstreamPress">P2:</label>
+            <label for="downstreamPress">P2, Pa:</label>
             <input type="text" id="downstreamPress" name="downstreamPress" class="w3-input w3-border" style="width: 75%;" value="{{downstreamPress}}">
           </div>
           <div class="w3-quarter">
-            <label for="upstreamTemp">T1:</label>
-            <input type="text" id="upstreamTemp" name="upstreamTemp" class="w3-input w3-border" style="width: 75%;" value="{{upstreamTemp}}">
-          </div>
-          <div class="w3-quarter">
-            <label for="downstreamTemp">T2:</label>
+            <label for="downstreamTemp">T2, K:</label>
             <input type="text" id="downstreamTemp" name="downstreamTemp" class="w3-input w3-border" style="width: 75%;" value="{{downstreamTemp}}">
           </div>
           <!-- Repeat the above block for input2 to input10 -->
@@ -104,7 +150,6 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
           </div>
           -->
         </div>
-        <button class="w3-button w3-red w3-section" type="submit">Submit</button>
       </form>
     </div>
   </div>
@@ -113,7 +158,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
 <div class="w3-row-padding w3-light-grey w3-padding-64 w3-container">
   <div class="w3-content">
     <div class="w3-third w3-center">
-      <i class="fa fa-coffee w3-padding-64 w3-text-red w3-margin-right"></i>
+      <i class="fa fa-droplet w3-padding-64w3-margin-right" style="color: #40798C;"></i>
     </div>
 
     <div class="w3-twothird">
@@ -129,8 +174,8 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
 <!-- Footer -->
 <footer class="w3-container w3-padding-64 w3-center w3-opacity">  
   <div class="w3-xlarge w3-padding-32">
-    <i class="fa fa-twitter w3-hover-opacity"></i>
-    <i class="fa fa-linkedin w3-hover-opacity"></i>
+    <i class="fa-brands fa-x-twitter w3-hover-opacity" onclick="window.location.href='https://www.twitter.com/nick_mondora/'"></i>
+    <i class="fa fa-linkedin w3-hover-opacity" onclick="window.location.href='https://www.linkedin.com/in/nick-mondora/'"></i>
  </div>
 </footer>
 
@@ -154,11 +199,11 @@ function myFunction() {
 
     // Check if either input has text
     if (inputElement1.value.trim() !== "" || inputElement2.value.trim() !== "") {
-      inputElement1.style.backgroundColor = 'lightgreen';  // Change background color for the first input
-      inputElement2.style.backgroundColor = 'lightgreen';  // Change background color for the second input
+      inputElement1.style.backgroundColor = '#B9D2B1';  // Change background color for the first input
+      inputElement2.style.backgroundColor = '#B9D2B1';  // Change background color for the second input
     } else {
-      inputElement1.style.backgroundColor = '#FFD55D';  // Reset background color for the first input
-      inputElement2.style.backgroundColor = '#FFD55D';  // Reset background color for the second input
+      inputElement1.style.backgroundColor = '#F1D6B8';  // Reset background color for the first input
+      inputElement2.style.backgroundColor = '#F1D6B8';  // Reset background color for the second input
     }
   }
 </script>
@@ -167,9 +212,9 @@ function myFunction() {
   function changeBackgroundColor(inputElement) {
     // Check if the input has text
     if (inputElement.value.trim() !== "") {
-      inputElement.style.backgroundColor = 'lightgreen';  // Change background color if there is text
+      inputElement.style.backgroundColor = '#B9D2B1';  // Change background color if there is text
     } else {
-      inputElement.style.backgroundColor = '#FF5D5D';  // Reset background color if there is no text
+      inputElement.style.backgroundColor = '#FBACBE';  // Reset background color if there is no text
     }
   }
 </script>
