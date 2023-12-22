@@ -4,7 +4,7 @@ from pint import UnitRegistry
 u = UnitRegistry()
 Q_ = u.Quantity
 
-app = Flask(__name__, template_folder='web/templates')
+app = Flask(__name__, template_folder='web/templates', static_folder='web/static')
 
 # Define the home page
 @app.route("/")
@@ -97,7 +97,6 @@ def rayleigh():
 @app.route("/isentropic", methods=["POST", "GET"])
 def isentropic():
     if request.method == "POST":
-        print(gamma)
         fluid = request.form["fluid"]
         gamma = request.form["gamma"]
         M = request.form["M"]
@@ -131,7 +130,7 @@ def isentropic():
         P0_Pstar = float(P0_Pstar) if P0_Pstar else None
         T = float(T) if T else None
         T0 = float(T0) if T0 else None
-        Tstar = float(Tstar if Tstar else None)
+        Tstar = float(Tstar) if Tstar else None
         T0_T = float(T0_T) if T0_T else None
         T0_Tstar = float(T0_Tstar) if T0_Tstar else None
         rho = float(rho) if rho else None
@@ -145,10 +144,10 @@ def isentropic():
         a0_a = float(a0_a) if a0_a else None
 
         result = isentropicFlow.isentropicFlow(u, fluid=fluid, M=M, P=P, P0=P0, Pstar=Pstar, 
-                                                                         P0_P=P0_P, P0_Pstar=P0_Pstar, T=T, T0=None, Tstar=T0, 
-                                                                         T0_T=T0_T, T0_Tstar=T0_Tstar, rho=rho, rho0=rho0, rhostar=rhostar,
-                                                                         rho0_rho=rho0_rho, rho0_rhostar=rho0_rhostar, A=A, Astar=Astar,
-                                                                         A_Astar=A_Astar, a0_a=a0_a, gamma=gamma, regime=regime)
+                                                    P0_P=P0_P, P0_Pstar=P0_Pstar, T=T, T0=T0, Tstar=Tstar, 
+                                                    T0_T=T0_T, T0_Tstar=T0_Tstar, rho=rho, rho0=rho0, rhostar=rhostar,
+                                                    rho0_rho=rho0_rho, rho0_rhostar=rho0_rhostar, A=A, Astar=Astar,
+                                                    A_Astar=A_Astar, a0_a=a0_a, gamma=gamma, regime=regime)
         fluid = "" if fluid is None else fluid
         gamma = "" if gamma is None else gamma
         M = "" if result['M'] is None else result['M']
@@ -208,4 +207,4 @@ def shocks():
 
 if __name__ == "__main__":
     #app.run(debug=False,host="0.0.0.0", port = 5000) # prod
-    app.run() # dev
+    app.run(debug=True) # dev

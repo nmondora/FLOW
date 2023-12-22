@@ -127,6 +127,18 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
             <input type="text" id="P0" name="P0" class="w3-input w3-border" style="width: 75%;" value="{{P0}}" placeholder="optional">
           </div>
           <div class="w3-third">
+            <label for="Pstar">P*:</label>
+            <input type="text" id="Pstar" name="Pstar" class="w3-input w3-border" style="width: 75%;" value="{{Pstar}}" placeholder="optional">
+          </div>
+          <div class="w3-third">
+            <label for="P0_P">P0/P:</label>
+            <input type="text" id="P0_P" name="P0_P" class="w3-input w3-border" style="width: 75%;" value="{{P0_P}}" placeholder="optional">
+          </div>
+          <div class="w3-third">
+            <label for="P0_Pstar">P0/P*:</label>
+            <input type="text" id="P0_Pstar" name="P0_Pstar" class="w3-input w3-border" style="width: 75%;" value="{{P0_Pstar}}" placeholder="optional">
+          </div>
+          <div class="w3-third">
             <label for="T">T:</label>
             <input type="text" id="T" name="T" class="w3-input w3-border" style="width: 75%;" value="{{T}}" placeholder="optional">
           </div>
@@ -134,58 +146,53 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
             <label for="T0">T0:</label>
             <input type="text" id="T0" name="T0" class="w3-input w3-border" style="width: 75%;" placeholder="optional" value="{{T0}}">
           </div>
+          <div class="w3-third">
+            <label for="Tstar">T*:</label>
+            <input type="text" id="Tstar" name="Tstar" class="w3-input w3-border" style="width: 75%;" placeholder="optional" value="{{Tstar}}">
+          </div>
+          <div class="w3-third">
+            <label for="T0_T">T0/T:</label>
+            <input type="text" id="T0_T" name="T0_T" class="w3-input w3-border" style="width: 75%;" placeholder="optional" value="{{T0_T}}">
+          </div>
+          <div class="w3-third">
+            <label for="T0_Tstar">T0/T*:</label>
+            <input type="text" id="T0_Tstar" name="T0_Tstar" class="w3-input w3-border" style="width: 75%;" placeholder="optional" value="{{T0_Tstar}}">
+          </div>
+          <div class="w3-third">
+            <label for="rho">rho:</label>
+            <input type="text" id="rho" name="rho" class="w3-input w3-border" style="width: 75%;" placeholder="optional" value="{{rho}}">
+          </div>
+          <div class="w3-third">
+            <label for="rho0">rho0:</label>
+            <input type="text" id="rho0" name="rho0" class="w3-input w3-border" style="width: 75%;" placeholder="optional" value="{{rho0}}">
+          </div>
+          <div class="w3-third">
+            <label for="rhostar">rho*:</label>
+            <input type="text" id="rhostar" name="rhostar" class="w3-input w3-border" style="width: 75%;" placeholder="optional" value="{{rhostar}}">
+          </div>
+          <div class="w3-third">
+            <label for="rho0_rho">rho0/rho:</label>
+            <input type="text" id="rho0_rho" name="rho0_rho" class="w3-input w3-border" style="width: 75%;" placeholder="optional" value="{{rho0_rho}}">
+          </div>
+          <div class="w3-third">
+            <label for="rho0_rhostar">rho0/rho*:</label>
+            <input type="text" id="rho0_rhostar" name="rho0_rhostar" class="w3-input w3-border" style="width: 75%;" placeholder="optional" value="{{rho0_rhostar}}">
+          </div>
+          <div class="w3-third">
+            <label for="A">A:</label>
+            <input type="text" id="A" name="A" class="w3-input w3-border" style="width: 75%;" placeholder="optional" value="{{A}}">
+          </div>
+          <div class="w3-third">
+            <label for="Astar">A*:</label>
+            <input type="text" id="Astar" name="Astar" class="w3-input w3-border" style="width: 75%;" placeholder="optional" value="{{Astar}}">
+          </div>
+          <div class="w3-third">
+            <label for="a0_a">a0/a:</label>
+            <input type="text" id="a0_a" name="a0_a" class="w3-input w3-border" style="width: 75%;" placeholder="optional" value="{{a0_a}}">
+          </div>
           <div class="w3-two-third">
           </div>
           <button class="w3-button w3-red w3-section" type="submit">Submit</button>
-          <h1>Outputs</h1>
-          <div class="w3-quarter">
-            <label for="M">M:</label>
-            <input type="text" id="M" name="M" class="w3-input w3-border" style="width: 75%;" value="{{M}}">
-          </div>
-          <div class="w3-quarter">
-            <label for="P0_P">P0/P:</label>
-            <input type="text" id="P0_P" name="P0_P" class="w3-input w3-border" style="width: 75%;" value="{{P0_P}}">
-          </div>
-          <div class="w3-quarter">
-            <label for="P0_Pstar">P0/P*:</label>
-            <input type="text" id="P0_Pstar" name="P0_Pstar" class="w3-input w3-border" style="width: 75%;" value="{{P0_Pstar}}">
-          </div>
-          <div class="w3-quarter">
-            <label for="T0_T">T0/T:</label>
-            <input type="text" id="T0_T" name="T0_T" class="w3-input w3-border" style="width: 75%;" value="{{T0_T}}">
-          </div>
-          <div class="w3-quarter">
-            <label for="T0_Tstar">T0/T*:</label>
-            <input type="text" id="T0_Tstar" name="T0_Tstar" class="w3-input w3-border" style="width: 75%;" value="{{T0_Tstar}}">
-          </div>
-          <div class="w3-quarter">
-            <label for="rho0_rho">rho0/rho:</label>
-            <input type="text" id="rho0_rho" name="rho0_rho" class="w3-input w3-border" style="width: 75%;" value="{{rho0_rho}}">
-          </div>
-          <div class="w3-quarter">
-            <label for="rho0_rhostar">rho0/rho*:</label>
-            <input type="text" id="rho0_rhostar" name="rho0_rhostar" class="w3-input w3-border" style="width: 75%;" value="{{rho0_rhostar}}">
-          </div>
-          <div class="w3-quarter">
-            <label for="P">P:</label>
-            <input type="text" id="P" name="P" class="w3-input w3-border" style="width: 75%;" value="{{P}}">
-          </div>
-          <div class="w3-quarter">
-            <label for="P0">P0:</label>
-            <input type="text" id="P0" name="P0" class="w3-input w3-border" style="width: 75%;" value="{{P0}}">
-          </div>
-          <div class="w3-quarter">
-            <label for="T">T, K:</label>
-            <input type="text" id="T" name="T" class="w3-input w3-border" style="width: 75%;" value="{{T}}">
-          </div>
-          <div class="w3-quarter">
-            <label for="T0">T0, K:</label>
-            <input type="text" id="T0" name="T0" class="w3-input w3-border" style="width: 75%;" value="{{T0}}">
-          </div>
-          <div class="w3-quarter">
-            <label for="a0_a">a0_a:</label>
-            <input type="text" id="a0_a" name="a0_a" class="w3-input w3-border" style="width: 75%;" value="{{a0_a}}">
-          </div>
         </div>
       </form>
     </div>
@@ -214,8 +221,8 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
 <!-- Footer -->
 <footer class="w3-container w3-padding-64 w3-center w3-opacity">  
   <div class="w3-xlarge w3-padding-32">
-    <i class="fa fa-twitter w3-hover-opacity"></i>
-    <i class="fa fa-linkedin w3-hover-opacity"></i>
+    <i class="fa-brands fa-x-twitter w3-hover-opacity" onclick="window.location.href='https://www.twitter.com/nick_mondora/'"></i>
+    <i class="fa fa-linkedin w3-hover-opacity" onclick="window.location.href='https://www.linkedin.com/in/nick-mondora/'"></i>
  </div>
 </footer>
 
