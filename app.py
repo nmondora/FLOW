@@ -6,6 +6,10 @@ Q_ = u.Quantity
 
 app = Flask(__name__, template_folder='web/templates', static_folder='web/static')
 
+def handle_fanno_error(e):
+    error_message = str(e)
+    return jsonify({"error": error_message}), 500  # 500 indicates a server error
+
 # Define the home page
 @app.route("/")
 def home():
@@ -36,12 +40,15 @@ def fanno():
         upstreamPress = float(upstreamPress)*u.pascal if upstreamPress else None
         upstreamTemp = Q_(float(upstreamTemp),u.kelvin) if upstreamTemp else None 
 
-        downstreamMach, downstreamPress, downstreamTemp = fannoFlow.fannoFlow(u, upstreamPress=upstreamPress, 
+        try:
+            downstreamMach, downstreamPress, downstreamTemp, upstreamTemp, gamma = fannoFlow.fannoFlow(u, upstreamPress=upstreamPress, 
                                                                          tubeDiam=tubeDiam, tubeLen=tubeLen,
                                                                          frictionCoeff=frictionCoeff, upstreamTemp=upstreamTemp,
                                                                          standardVolFlow=standardVolFlow, massFlow=massFlow,
                                                                          upstreamMach=upstreamMach, upstreamVel=upstreamVel, fluid=fluid)
-        
+        except Exception as e:
+            return handle_fanno_error(e)
+
         fluid = "" if fluid is None else fluid
         gamma = "" if gamma is None else gamma
         tubeDiam = "" if tubeDiam is None else tubeDiam.magnitude
@@ -208,3 +215,4 @@ def shocks():
 if __name__ == "__main__":
     #app.run(debug=False,host="0.0.0.0", port = 5000) # prod
     app.run(debug=True) # dev
+    
